@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  backend:
+    build:
+      target: dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - ".:/app"
+  db:
+    ports:
+      - "55434:5432"

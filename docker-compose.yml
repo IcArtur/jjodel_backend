@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+  backend:
+    build:
+      context: .
+      target: prod
+    environment:
+      - DJANGO_DATABASE_URL=postgres://postgres:postgres@db:5432/jjodel
+      - NGINX_PORT=${NGINX_PORT}
+    depends_on:
+      - db
+    user: ${LOCAL_USER_ID}
+  db:
+    image: postgres:14.2
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=jjodel
+volumes:
+  db_data:

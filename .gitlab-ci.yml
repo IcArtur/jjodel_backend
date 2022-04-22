@@ -1,0 +1,67 @@
+stages:
+- test
+- build
+
+variables:
+  GIT_DEPTH: 10
+
+test:
+  image: python:3.8
+  stage: test
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    policy: pull-push
+    paths:
+      - .tox
+      - .pip
+  services:
+    - postgres:12
+  before_script:
+    - pip install tox
+  variables:
+    POSTGRES_PASSWORD: "postgres"
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip"
+    DATABASE_URL: "postgres://postgres:postgres@postgres:5432/postgres"
+    DJANGO_SECRET_KEY: "))l@kn-eym6$9w3veu5g5yaa2zjbkrtr)s5)f1)#9+)bl4_2u@"
+    DJANGO_DEFAULT_FROM_EMAIL: "test@test.it"
+    DJANGO_EMAIL_HOST_USER: "test"
+    DJANGO_EMAIL_HOST_PASSWORD: "test"
+  script:
+    - tox -e coverage,report,reporthtml
+  coverage: '/^TOTAL.*\s+(\d+\%)$/'
+  artifacts:
+    paths:
+      - public
+
+.build:
+  stage: build
+  image: docker:19.03.5
+  services:
+    - docker:19.03.5-dind
+  variables:
+    DOCKER_DRIVER: "overlay2"
+    TARGET: "prod"
+  before_script:
+    - echo "Requirements $REQUIREMENTS"
+    - echo "Docker driver $DOCKER_DRIVER"
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" "$CI_REGISTRY"
+  script:
+    - docker pull "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" || true
+    - docker image tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG-old" || true
+    - docker build --cache-from "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG-old" -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" --target="$REQUIREMENTS"  --pull .
+    - docker push "$CI_REGISTRY_IMAGE"
+  after_script:
+    - docker logout "$CI_REGISTRY"
+
+build-production:
+  extends: .build
+  only:
+    - master
+    - tags
+
+build-develop:
+  extends: .build
+  variables:
+    TARGET: "dev"
+  only:
+    - develop

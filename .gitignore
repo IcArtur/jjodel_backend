@@ -170,3 +170,4 @@ deploy/hosts
 *.bak
 *.dump
 protected_media/
+.directory

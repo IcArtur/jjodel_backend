@@ -28,7 +28,6 @@ dev:
 
 migrate:
 	python manage.py migrate --noinput
-	python manage.py migrate --noinput --database=timescale
 
 migrations:
 	python manage.py makemigrations --no-header

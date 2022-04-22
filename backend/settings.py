@@ -12,13 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
-import dj_database_url
 from configurations import Configuration, values
 from django.conf.locale.it import formats as it_formats
-
-# overwrite l10N date format
-# https://blog.mounirmesselmeni.de/2014/11/06/date-format-in-django-admin/
-it_formats.DATE_FORMAT = "d/m/Y"
 
 
 class ProjectDefault(Configuration):
@@ -46,6 +41,7 @@ class ProjectDefault(Configuration):
     # Application definition
 
     INSTALLED_APPS = [
+        "rest_framework",
         "django.contrib.admin",
         "django.contrib.auth",
         "django.contrib.contenttypes",
@@ -70,13 +66,17 @@ class ProjectDefault(Configuration):
         {
             "BACKEND": "django.template.backends.django.DjangoTemplates",
             "DIRS": [],
-            "APP_DIRS": True,
+            "APP_DIRS": False,
             "OPTIONS": {
                 "context_processors": [
                     "django.template.context_processors.debug",
                     "django.template.context_processors.request",
                     "django.contrib.auth.context_processors.auth",
                     "django.contrib.messages.context_processors.messages",
+                ],
+                "loaders": [
+                    "django.template.loaders.app_directories.Loader",
+                    "django.template.loaders.filesystem.Loader",
                 ],
             },
         }
@@ -87,11 +87,7 @@ class ProjectDefault(Configuration):
     # Database
     # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-    DATABASES = {
-        "default": dj_database_url.config(env="DJANGO_DATABASE_URL"),
-    }
-    # Database routers
-    # https://docs.djangoproject.com/en/3.0/ref/settings/#database-routers
+    DATABASES = values.DatabaseURLValue()
 
     # Password validation
     # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators  # noqa
@@ -123,14 +119,13 @@ class ProjectDefault(Configuration):
 
     USE_I18N = True
 
-    USE_L10N = False
+    USE_L10N = True
 
     USE_TZ = True
 
     # Date format
     # https://docs.djangoproject.com/en/3.0/ref/settings/#date-format
 
-    DATETIME_FORMAT = "d/m/Y H:i:s"
     DATE_FORMAT = "d/m/Y"
     SHORT_DATE_FORMAT = "d/m/Y"
 
@@ -139,7 +134,7 @@ class ProjectDefault(Configuration):
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-    STATIC_URL = "static/"
+    STATIC_URL = "/static/"
 
     STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, "static"))
 
@@ -150,7 +145,7 @@ class ProjectDefault(Configuration):
     # Stored files
     # https://docs.djangoproject.com/en/3.0/topics/files/
 
-    MEDIA_URL = "media/"
+    MEDIA_URL = "/media/"
 
     MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, "media"))
 
@@ -181,10 +176,19 @@ class ProjectDefault(Configuration):
 
     X_FRAME_OPTIONS = "SAMEORIGIN"  # Default: 'SAMEORIGIN'
 
-    # Force script name
-    # https://docs.djangoproject.com/en/3.1/ref/settings/#force-script-name
+    # https://docs.djangoproject.com/en/3.0/ref/settings/#data-upload-max-number-fields
 
-    FORCE_SCRIPT_NAME = values.Value(default=None)
+    DATA_UPLOAD_MAX_NUMBER_FIELDS = None
+
+    # REST FRAMEWORK
+    REST_FRAMEWORK = {
+        "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+        "PAGE_SIZE": 2,
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            # 'rest_framework.authentication.SessionAuthentication',
+            "rest_framework.authentication.BasicAuthentication",
+        ],
+    }
 
 
 class Local(ProjectDefault):
@@ -199,15 +203,6 @@ class Local(ProjectDefault):
     # Django Debug Toolbar
     # https://django-debug-toolbar.readthedocs.io/en/stable/configuration.html
 
-    try:
-        import debug_toolbar  # noqa
-    except ModuleNotFoundError:  # pragma: no cover
-        pass
-    else:  # pragma: no cover
-        INTERNAL_IPS = values.ListValue([], environ_name="ALLOWED_HOSTS")
-        INSTALLED_APPS.append("debug_toolbar")
-        MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
-        DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda x: True}
 
 
 class Alpha(ProjectDefault):

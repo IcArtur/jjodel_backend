@@ -3,7 +3,6 @@
 from django.apps import apps  # noqa: F401
 from django.db import connections, models
 
-
 class View(models.Model):
     """Define model for View."""
 
@@ -21,7 +20,7 @@ class ViewOrgVisibility(models.Model):
     """Define model for ViewOrgVisibility."""
 
     readonly = models.BooleanField(verbose_name='Sola lettura', default=True)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    organization = models.ForeignKey("jjodel.Organization", on_delete=models.CASCADE)
     view = models.ForeignKey(View, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -45,8 +44,8 @@ class ViewUserVisibility(models.Model):
     """Define model for ViewUserVisibility."""
 
     readonly = models.BooleanField(verbose_name='Sola lettura', default=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    view = models.ForeignKey(View, on_delete=models.CASCADE)
+    user = models.ForeignKey("jjodel.User", on_delete=models.CASCADE)
+    view = models.ForeignKey("jjodel.View", on_delete=models.CASCADE)
 
     def __str__(self):
         """Return str repr for model."""

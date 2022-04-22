@@ -7,6 +7,9 @@ services:
     environment:
       - DJANGO_DATABASE_URL=postgres://postgres:postgres@db:5432/jjodel
       - NGINX_PORT=${NGINX_PORT}
+      - COMPOSE_FILE=docker-compose.yml:docker-compose.develop.yml
+      - USE_DOCKER=True
+      - COMPOSE_PROJECT_NAME=jjodel
     depends_on:
       - db
     user: ${LOCAL_USER_ID}

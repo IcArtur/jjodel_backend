@@ -1,6 +1,6 @@
 FROM debian:bullseye-slim AS base
 
-EXPOSE 8001
+EXPOSE 8000
 RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN useradd --create-home appuser
 ARG DEBIAN_FRONTEND=noninteractive
@@ -47,7 +47,6 @@ RUN pip3 install -r requirements.txt
 USER appuser
 COPY --chown=appuser . .
 CMD python3 manage.py migrate --noinput && \
-   python3 manage.py migrate --noinput --database=timescale && \
    python3 manage.py runserver 0:8000
 
 

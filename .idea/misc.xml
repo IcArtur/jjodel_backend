@@ -3,5 +3,5 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (jjodel_backend)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Remote Python 3.9.2 Docker Compose (backend at [/home/francesco/Projects/jjodel_backend/docker-compose.yml, /home/francesco/Projects/jjodel_backend/docker-compose.develop.yml])" project-jdk-type="Python SDK" />
 </project>

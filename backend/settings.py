@@ -24,6 +24,9 @@ class ProjectDefault(Configuration):
     https://django-configurations.readthedocs.io
     """
 
+    # Override deafult Django User Model.
+    AUTH_USER_MODEL = 'jjodel.User'
+
     # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -41,14 +44,16 @@ class ProjectDefault(Configuration):
     # Application definition
 
     INSTALLED_APPS = [
-        "rest_framework",
         "django.contrib.admin",
         "django.contrib.auth",
         "django.contrib.contenttypes",
         "django.contrib.sessions",
         "django.contrib.messages",
         "django.contrib.staticfiles",
+        "rest_framework",
+        "rest_framework.authtoken",
         "jjodel.jjodel",
+
     ]
     MIDDLEWARE = [
         "django.middleware.security.SecurityMiddleware",

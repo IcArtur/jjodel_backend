@@ -3,21 +3,13 @@ from datetime import datetime
 
 from django.apps import apps  # noqa: F401
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
-class User(models.Model):
+class User(AbstractUser):
     """Define model for User."""
 
-    mail = models.EmailField(verbose_name='Email', null=True, blank=True)
-    name = models.TextField(verbose_name='Nome', null=True, blank=True)
-    surname = models.TextField(verbose_name='Cognome', null=True, blank=True)
-    password = models.TextField(verbose_name='Password')
-    username = models.TextField(verbose_name='Username')
     bio = models.TextField(verbose_name='Bio', null=True, blank=True)
-
-    def __str__(self):
-        """Return str repr for model."""
-        return self.username
 
 
 class AdminMember(models.Model):

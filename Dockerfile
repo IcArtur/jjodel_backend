@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libpango1.0-0 \
         mime-support \
         gdal-bin \
+        unixodbc-dev \
     && rm -rf /var/lib/apt/lists/*
 
 FROM base AS test

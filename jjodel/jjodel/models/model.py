@@ -1,5 +1,4 @@
 """Define Jjodel Model models."""
-
 from django.apps import apps  # noqa: F401
 from django.db import models
 

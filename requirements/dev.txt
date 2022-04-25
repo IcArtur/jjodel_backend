@@ -65,16 +65,16 @@ pycodestyle==2.6.0        # via flake8
 pydocstyle==6.1.1         # via flake8-docstrings
 pydot==1.4.2
 pyflakes==2.2.0           # via flake8
-pygments==2.11.2          # via ipython
+pygments==2.12.0          # via ipython
 pyodbc==4.0.32
 pyparsing==3.0.8          # via packaging, pydot
 pytest-django==3.8.0
-pytest==7.1.1             # via pytest-django
+pytest==7.1.2             # via pytest-django
 python-dateutil==2.8.2
 python-dotenv==0.10.5
 pytz==2022.1              # via djangorestframework
 pyyaml==6.0
-regex==2022.3.15          # via black
+regex==2022.4.24          # via black
 requests==2.25.1
 rope==0.16.0
 six==1.16.0               # via asttokens, django-configurations, django-extensions, pip-tools, pre-commit, python-dateutil, tox, virtualenv

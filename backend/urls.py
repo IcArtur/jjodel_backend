@@ -19,4 +19,5 @@ from django.urls import re_path, include
 urlpatterns = [
     # re_path("/", admin.site.urls),
     re_path("api/v1/", include("jjodel.jjodel.urls")),
+    re_path('', admin.site.urls),
 ]

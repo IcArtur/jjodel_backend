@@ -11,11 +11,12 @@ class Organization(models.Model):
     """Define model for Organization."""
 
     isPublic = models.BooleanField(verbose_name='Pubblico', default=False)
-    openMembership = models.BooleanField(verbose_name='Pubblico', default=False)
+    openMembership = models.BooleanField(verbose_name='Iscrizione Aperta',
+                                         default=False)
     name = models.TextField(verbose_name='Nome')
     mailDomainRequired = models.TextField(verbose_name='Mail Domain')
     bio = models.TextField(verbose_name='Bio')
-    owner = models.ForeignKey(GroupMember, on_delete=models.CASCADE)
+    owner = models.ForeignKey(GroupMember, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         """Return str repr for model."""

@@ -3,6 +3,7 @@
 from django.apps import apps  # noqa: F401
 from django.db import connections, models
 
+
 class View(models.Model):
     """Define model for View."""
 

@@ -44,7 +44,7 @@ class GroupMember(models.Model):
 
     def __str__(self):
         """Return str repr for model."""
-        return f"{self.member} - {self.organization}"
+        return f"{self.member} - {self.organization_fk}"
 
 
 class MembershipRequest(models.Model):

@@ -1,10 +1,10 @@
 """Define urls for jjodel app."""
 from django.contrib import admin
-from django.urls import re_path
+from django.urls import path, include
 
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
-    re_path('auth/', obtain_auth_token),
-    re_path('', admin.site.urls),
+    path('token/', obtain_auth_token, name='obtain_auth_token'),
+    path('organization/<Group>/', include('jjodel.jjodel.routers.organization')),
 ]

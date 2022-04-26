@@ -14,9 +14,11 @@ class Organization(models.Model):
     openMembership = models.BooleanField(verbose_name='Iscrizione Aperta',
                                          default=False)
     name = models.TextField(verbose_name='Nome')
-    mailDomainRequired = models.TextField(verbose_name='Mail Domain')
-    bio = models.TextField(verbose_name='Bio')
-    owner = models.ForeignKey(GroupMember, on_delete=models.CASCADE, null=True, blank=True)
+    mailDomainRequired = models.TextField(verbose_name='Mail Domain', null=True,
+                                          blank=True)
+    bio = models.TextField(verbose_name='Bio', null=True, blank=True)
+    owner = models.ForeignKey(GroupMember, on_delete=models.CASCADE, null=True,
+                              blank=True)
 
     def __str__(self):
         """Return str repr for model."""

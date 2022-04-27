@@ -1,7 +1,6 @@
 """Viewpoint admin module."""
 
 from django.contrib import admin
-
 from jjodel.jjodel.models import Viewpoint, ViewpointView
 
 
@@ -13,4 +12,3 @@ class ViewpointAdmin(admin.ModelAdmin):
 @admin.register(ViewpointView)
 class ViewpointViewAdmin(admin.ModelAdmin):
     """Define ViewpointView admin."""
-

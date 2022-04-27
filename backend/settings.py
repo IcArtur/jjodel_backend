@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 from configurations import Configuration, values
-from django.conf.locale.it import formats as it_formats
 
 
 class ProjectDefault(Configuration):
@@ -25,7 +24,7 @@ class ProjectDefault(Configuration):
     """
 
     # Override deafult Django User Model.
-    AUTH_USER_MODEL = 'jjodel.User'
+    AUTH_USER_MODEL = "jjodel.User"
 
     # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -53,7 +52,6 @@ class ProjectDefault(Configuration):
         "rest_framework",
         "rest_framework.authtoken",
         "jjodel.jjodel",
-
     ]
     MIDDLEWARE = [
         "django.middleware.security.SecurityMiddleware",
@@ -207,7 +205,6 @@ class Local(ProjectDefault):
 
     # Django Debug Toolbar
     # https://django-debug-toolbar.readthedocs.io/en/stable/configuration.html
-
 
 
 class Alpha(ProjectDefault):

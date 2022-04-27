@@ -1,32 +1,39 @@
 """Admin REST Api viewset."""
-from rest_framework.authentication import TokenAuthentication
-from rest_framework import viewsets, status
-from rest_framework.response import Response
-
-from jjodel.jjodel.models import User, Organization, GroupMember, AdminMember
-from jjodel.jjodel.permissions.member import IsAdminMember
+from jjodel.jjodel.models import AdminMember, Organization, User
 from jjodel.jjodel.serializers.user import UserSerializer
+from rest_framework import status, viewsets
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.response import Response
 
 
 class AdminMembersViewSet(viewsets.ModelViewSet):
+    """AdminMembers ViewSet."""
+
     authentication_classes = [TokenAuthentication]
     # permission_classes = [IsAdminMember]
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        group_name = self.kwargs['Group']
+        """Define queryset for AdminMembersViewSet class. This filters the admin."""
+        group_name = self.kwargs["Group"]
         return User.objects.filter(adminmember__organization__name=group_name)
 
     def update(self, request, *args, **kwargs):
-        """Update method for AdminMembersViewSet"""
+        """Create new Admin for a group."""
         try:
-            user = User.objects.get(username=kwargs['pk'])
-            organization = Organization.objects.get(name=kwargs['Group'])
-            user_is_admin = AdminMember.objects.filter(admin=request.user,
-                                                       organization=organization).exists()
-            if user_is_admin:
-                AdminMember.objects.update_or_create(admin=user,
-                                                     organization=organization)
+            # Only admin can make new admin
+            # kwargs['pk'] is the username, it's not possible to change the lookup name
+            user = User.objects.get(username=kwargs["pk"])
+            organization = Organization.objects.get(name=kwargs["Group"])
+            # Owners can add Admins
+            is_owner = organization.owner.member == request.user
+            is_admin = AdminMember.objects.filter(
+                admin=request.user, organization=organization
+            ).exists()
+            if is_admin or is_owner:
+                AdminMember.objects.update_or_create(
+                    admin=user, organization=organization
+                )
             else:
                 return Response(status=status.HTTP_403_FORBIDDEN)
         except Exception:
@@ -34,15 +41,13 @@ class AdminMembersViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_201_CREATED)
 
     def destroy(self, request, *args, **kwargs):
-        """Delete method for AdminMembersViewSet"""
+        """Remove Admin from a group."""
         try:
-            user = User.objects.get(username=kwargs['pk'])
-            organization = Organization.objects.get(name=kwargs['Group'])
-            user_is_admin = AdminMember.objects.filter(admin=request.user,
-                                                       organization=organization).exists()
-            if user_is_admin:
-                AdminMember.objects.get(admin=user,
-                                        organization=organization).delete()
+            user = User.objects.get(username=kwargs["pk"])
+            organization = Organization.objects.get(name=kwargs["Group"])
+            is_owner = organization.owner.member == request.user
+            if is_owner:
+                AdminMember.objects.get(admin=user, organization=organization).delete()
             else:
                 return Response(status=status.HTTP_403_FORBIDDEN)
         except Exception:

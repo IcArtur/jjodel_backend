@@ -1,15 +1,18 @@
 """User admin module."""
 
 from django.contrib import admin
-
-from jjodel.jjodel.models import AdminMember, GroupMember, MembershipRequest, \
-    UserVisibility
-
+from jjodel.jjodel.models import (
+    AdminMember,
+    GroupMember,
+    MembershipRequest,
+    UserVisibility,
+)
 
 # @admin.register(User)
 # class UserAdmin(admin.ModelAdmin):
 #     """Define User admin."""
 #
+
 
 @admin.register(AdminMember)
 class AdminMemberAdmin(admin.ModelAdmin):
@@ -29,4 +32,3 @@ class MembershipRequestAdmin(admin.ModelAdmin):
 @admin.register(UserVisibility)
 class UserVisibilityAdmin(admin.ModelAdmin):
     """Define UserVisibility admin."""
-

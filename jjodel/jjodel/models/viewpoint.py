@@ -2,15 +2,14 @@
 
 from django.apps import apps  # noqa: F401
 from django.db import models
-
 from jjodel.jjodel.models.view import View
 
 
 class Viewpoint(models.Model):
     """Define model for Viewpoint."""
 
-    name = models.CharField(verbose_name='Nome', max_length=255)
-    is_public = models.BooleanField(verbose_name='Pubblico', default=False)
+    name = models.CharField(verbose_name="Nome", max_length=255)
+    is_public = models.BooleanField(verbose_name="Pubblico", default=False)
 
     def __str__(self):
         """Return str repr for model."""

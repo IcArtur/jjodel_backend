@@ -1,0 +1,5 @@
+#!/bin/bash
+# use with "cat db.dump | ./utils/server_pg_restore"
+
+docker exec -i $(docker-compose ps -q db) pg_restore --dbname=postgres://postgres:postgres@db:5432/icegraph -Fc -c
+echo "DB restored"

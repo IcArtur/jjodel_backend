@@ -1,0 +1,4 @@
+#!/bin/bash
+# use with "./utils/server_pg_dump > db.dump"
+docker exec -i $(docker-compose ps -q db) pg_dump  --dbname=postgres://postgres:postgres@db:5432/jjodel -hdb -Fc
+

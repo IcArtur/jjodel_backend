@@ -10,7 +10,6 @@ class AdminMembersViewSet(viewsets.ModelViewSet):
     """AdminMembers ViewSet."""
 
     authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAdminMember]
     serializer_class = UserSerializer
 
     def get_queryset(self):
@@ -21,12 +20,12 @@ class AdminMembersViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         """Create new Admin for a group."""
         try:
-            # Only admin can make new admin
+            # Only admin and owner can make new admin
             # kwargs['pk'] is the username, it's not possible to change the lookup name
             user = User.objects.get(username=kwargs["pk"])
             organization = Organization.objects.get(name=kwargs["Group"])
             # Owners can add Admins
-            is_owner = organization.owner.member == request.user
+            is_owner = organization.owner == request.user
             is_admin = AdminMember.objects.filter(
                 admin=request.user, organization=organization
             ).exists()
@@ -43,9 +42,10 @@ class AdminMembersViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         """Remove Admin from a group."""
         try:
+            # Only owner can remove admins.
             user = User.objects.get(username=kwargs["pk"])
             organization = Organization.objects.get(name=kwargs["Group"])
-            is_owner = organization.owner.member == request.user
+            is_owner = organization.owner == request.user
             if is_owner:
                 AdminMember.objects.get(admin=user, organization=organization).delete()
             else:

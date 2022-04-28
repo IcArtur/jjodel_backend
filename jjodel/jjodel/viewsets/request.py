@@ -65,6 +65,7 @@ class MembershipRequestViewSet(viewsets.ModelViewSet):
         try:
             user = User.objects.get(username=kwargs["pk"])
             organization = Organization.objects.get(name=kwargs["Group"])
+            # MembershipRequest user, admin and owner can cancel requests.
             if request.user == user or self.check_admin_permission(request,
                                                                    kwargs["Group"]):
                 MembershipRequest.objects.get(
@@ -96,7 +97,7 @@ class MembershipRequestViewSet(viewsets.ModelViewSet):
         """Check admin permission."""
         organization = Organization.objects.get(name=group)
         # Owners can add Admins
-        is_owner = organization.owner.member == request.user
+        is_owner = organization.owner == request.user
         is_admin = AdminMember.objects.filter(
             admin=request.user, organization=organization
         ).exists()

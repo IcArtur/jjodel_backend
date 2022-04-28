@@ -7,6 +7,7 @@ from jjodel.jjodel.models import Organization, OrganizationVisibility
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
     """Define Organization admin."""
+    readonly_fields = ("owner", )
 
 
 @admin.register(OrganizationVisibility)

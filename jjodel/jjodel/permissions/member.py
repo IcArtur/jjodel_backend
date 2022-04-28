@@ -1,5 +1,5 @@
 """Member file of permission package."""
-from jjodel.jjodel.models import AdminMember, GroupMember
+from jjodel.jjodel.models import AdminMember, GroupMember, Organization
 from rest_framework import permissions
 
 
@@ -8,12 +8,19 @@ class IsGroupMember(permissions.BasePermission):
 
     def has_permission(self, request, view):
         """Global auth method, check user, authentication and membership."""
-        group_name = view.kwargs["Group"]
-        auth = request.user and request.user.is_authenticated
-        membership = GroupMember.objects.filter(
-            organization_fk__name=group_name, member=request.user
-        ).exists()
-        return auth and membership
+        try:
+            group_name = view.kwargs["Group"]
+            auth = request.user and request.user.is_authenticated
+            is_member = GroupMember.objects.filter(
+                organization_fk__name=group_name, member=request.user
+            ).exists()
+            is_admin = AdminMember.objects.filter(
+                organization__name=group_name, admin=request.user
+            ).exists()
+            is_owner = Organization.objects.filter(owner=request.user).exists()
+            return auth and (is_member or is_admin or is_owner)
+        except Exception:
+            return False
 
 
 class IsAdminMember(permissions.BasePermission):
@@ -23,7 +30,7 @@ class IsAdminMember(permissions.BasePermission):
         """Global auth method, check user, authentication and adminship."""
         group_name = view.kwargs["Group"]
         auth = request.user and request.user.is_authenticated
-        adminship = AdminMember.objects.filter(
+        is_admin = AdminMember.objects.filter(
             organization__name=group_name, member=request.user
         ).exists()
-        return auth and adminship
+        return auth and is_admin

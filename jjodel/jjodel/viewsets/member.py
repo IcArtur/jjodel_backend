@@ -24,10 +24,11 @@ class GroupMembersViewSet(viewsets.ModelViewSet):
         try:
             user = User.objects.get(username=kwargs["pk"])
             organization = Organization.objects.get(name=kwargs["Group"])
-            is_owner = organization.owner.member == request.user
+            is_owner = organization.owner == request.user
             is_admin = AdminMember.objects.filter(
                 admin=request.user, organization=organization
             ).exists()
+            # If org is open, user is admin or user is owner.
             if organization.openMembership or is_admin or is_owner:
                 GroupMember.objects.update_or_create(
                     member=user, organization_fk=organization
@@ -36,17 +37,18 @@ class GroupMembersViewSet(viewsets.ModelViewSet):
                 return Response(status=status.HTTP_403_FORBIDDEN)
         except Exception:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_200_OK)
 
     def destroy(self, request, *args, **kwargs):
         """Remove member from group."""
         try:
             user = User.objects.get(username=kwargs["pk"])
             organization = Organization.objects.get(name=kwargs["Group"])
-            is_owner = organization.owner.member == request.user
+            is_owner = organization.owner == request.user
             is_admin = AdminMember.objects.filter(
                 admin=request.user, organization=organization
             ).exists()
+            # User can exit, admin and owner can remove users.
             if request.user == user or is_admin or is_owner:
                 GroupMember.objects.get(
                     member=user, organization_fk=organization

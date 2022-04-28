@@ -14,16 +14,74 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     serializer_class = OrganizationSerializer
     lookup_field = 'name'
 
-    # def list(self, request, *args, **kwargs):
-    #     """Permission check for list method."""
-    #     regexp = request.query_params["regexp"]
-    #     name = request.query_params["name"]
-    #     if regexp:
-    #         pass
-    #     return Response()
+    def update(self, request, *args, **kwargs):
+        """PUT method for organization."""
+        # If the user already has created 10 orgs.
+        if Organization.objects.filter(owner=request.user).count() >= 10:
+            return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        try:
+            # Check if the name of the orgs is already taken
+            if Organization.objects.filter(name=request.data['name']).exists():
+                return Response(status=status.HTTP_409_CONFLICT,
+                                data={"message": "Organization already exists"})
+            is_public = request.data['isPublic'] == 'true'
+            open_membership = request.data['openMembership'] == 'true'
+            name = request.data['name']
+            mail_domain_required = request.data['mailDomainRequired']
+            # Create new organization.
+            Organization.objects.create(isPublic=is_public,
+                                        openMembership=open_membership, name=name,
+                                        mailDomainRequired=mail_domain_required,
+                                        owner=request.user)
+        except Exception:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_201_CREATED)
+
+    def partial_update(self, request, *args, **kwargs):
+        """PATCH method for organization."""
+        try:
+            # Check if the name of the orgs is already taken
+            organization = Organization.objects.filter(name=kwargs["name"])
+            is_public = request.data['isPublic'] == 'true'
+            open_membership = request.data['openMembership'] == 'true'
+            name = request.data['name']
+            mail_domain_required = request.data['mailDomainRequired']
+            owner = User.objects.get(username=request.data['owner'])
+            is_admin = AdminMember.objects.filter(organization=organization[0],
+                                               admin=request.user).exists()
+            is_owner = request.user == organization[0].owner
+            # Permission check
+            if not is_admin and not is_owner:
+                return Response(status=status.HTTP_403_FORBIDDEN)
+            # Only the owner can change the owner
+            if organization[0].owner != owner and request.user != organization[0].owner:
+                return Response(status=status.HTTP_403_FORBIDDEN,
+                                data={"message": "Admin can't change owner."})
+            # Update the organization.
+            organization.update(isPublic=is_public,
+                                openMembership=open_membership, name=name,
+                                mailDomainRequired=mail_domain_required,
+                                owner=owner)
+        except Exception:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_200_OK)
+
+    def destroy(self, request, *args, **kwargs):
+        """Delete organization."""
+        try:
+            organization = Organization.objects.filter(name=kwargs["name"])
+            is_owner = organization[0].owner == request.user
+            # Only owner can delete the organization.
+            if is_owner:
+                organization.delete()
+            else:
+                return Response(status=status.HTTP_403_FORBIDDEN)
+        except Exception:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_200_OK)
 
     def retrieve(self, request, *args, **kwargs):
-        """Permission check for retrieve method."""
+        """Permission check for GET detail method."""
         try:
             if self.get_retrieve_permissions(request, kwargs["name"]):
                 return super().retrieve(self, request, *args, **kwargs)
@@ -56,9 +114,5 @@ class OrganizationViewSet(viewsets.ModelViewSet):
         is_admin = AdminMember.objects.filter(
             admin=request.user, organization=organization
         ).exists()
+        # If the organization is not public user needs to be at least member.
         return organization.isPublic or is_member or is_owner or is_admin
-
-
-    # def retrieve(self, request, *args, **kwargs):
-    #     """Permission check for retrieve method."""
-    #     pass

@@ -3,7 +3,7 @@
 from django.apps import apps  # noqa: F401
 from django.db import models
 from jjodel.jjodel.models.model import Model
-from jjodel.jjodel.models.user import GroupMember
+from jjodel.jjodel.models.user import GroupMember, User
 
 
 class Organization(models.Model):
@@ -19,7 +19,7 @@ class Organization(models.Model):
     )
     bio = models.TextField(verbose_name="Bio", null=True, blank=True)
     owner = models.ForeignKey(
-        GroupMember, on_delete=models.CASCADE, null=True, blank=True
+        User, on_delete=models.CASCADE, null=True, blank=True,
     )
 
     def __str__(self):

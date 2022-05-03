@@ -12,6 +12,8 @@ class View(models.Model):
     )
     description = models.TextField(verbose_name="Descrizione")
     is_public = models.BooleanField(verbose_name="Pubblico", default=False)
+    author = models.ForeignKey("jjodel.User", on_delete=models.CASCADE, null=True,
+                               blank=True)
     html = models.TextField(verbose_name="Testo HTML", null=True, blank=True)
 
     def __str__(self):

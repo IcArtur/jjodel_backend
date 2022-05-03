@@ -10,9 +10,11 @@ class Model(models.Model):
 
     isPublic = models.BooleanField(verbose_name="Pubblico", default=False)
     content_xml = models.TextField(verbose_name="Content XML")
+    namespace = models.TextField(verbose_name="Namespace", null=True, blank=True)
     name = models.TextField(verbose_name="Nome")
-    instanceOf = models.ForeignKey("self", on_delete=models.DO_NOTHING)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    instanceOf = models.ForeignKey("self", on_delete=models.DO_NOTHING, null=True,
+                                   blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         """Return str repr for model."""

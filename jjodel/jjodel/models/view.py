@@ -7,10 +7,11 @@ from django.db import models
 class View(models.Model):
     """Define model for View."""
 
+    name = models.CharField(verbose_name="Nome", max_length=255)
     preview_image = models.BinaryField(
         verbose_name="Preview Immagine", null=True, blank=True
     )
-    description = models.TextField(verbose_name="Descrizione")
+    description = models.TextField(verbose_name="Descrizione", null=True, blank=True)
     is_public = models.BooleanField(verbose_name="Pubblico", default=False)
     author = models.ForeignKey("jjodel.User", on_delete=models.CASCADE, null=True,
                                blank=True)
@@ -18,7 +19,7 @@ class View(models.Model):
 
     def __str__(self):
         """Return str repr for model."""
-        return self.description
+        return self.name
 
 
 class ViewOrgVisibility(models.Model):

@@ -6,9 +6,12 @@ from ..models import Viewpoint
 
 class ViewpointSerializer(serializers.ModelSerializer):
     """Serializer for Viewpoint model."""
-
+    author = serializers.SerializerMethodField()
     class Meta:
         """Meta class of ViewpointSerializer."""
-
         model = Viewpoint
-        fields = "__all__"
+        fields = ["name", "is_public", "author"]
+
+    def get_author(self, obj):
+        """Method serializer."""
+        return obj.author.username

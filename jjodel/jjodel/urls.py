@@ -6,7 +6,6 @@ from jjodel.jjodel.viewsets.organization import OrganizationViewSet
 
 urlpatterns = [
     path("token/", obtain_auth_token, name="obtain_auth_token"),
-    path("user/<username>/", include("jjodel.jjodel.routers.viewpoint")),
 
     path("", include("jjodel.jjodel.routers.organization")),
     path("", include("jjodel.jjodel.routers.model")),
@@ -17,5 +16,6 @@ urlpatterns = [
     path("organization/<Group>/", include("jjodel.jjodel.routers.request")),
 
     path("user/<username>/", include("jjodel.jjodel.routers.viewpoint")),
+    path("user/<username>/", include("jjodel.jjodel.routers.view")),
 
 ]

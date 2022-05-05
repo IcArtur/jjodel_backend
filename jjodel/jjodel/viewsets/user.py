@@ -27,7 +27,7 @@ class UserViewSet(viewsets.ModelViewSet):
         except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    def update(self, request, *args, **kwargs):
+    def partial_update(self, request, *args, **kwargs):
         """Update user."""
         try:
             d = self.get_data_dict(request.data)

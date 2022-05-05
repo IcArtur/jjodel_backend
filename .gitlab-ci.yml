@@ -21,7 +21,7 @@ test:
   variables:
     POSTGRES_PASSWORD: "postgres"
     PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip"
-    DATABASE_URL: "postgres://postgres:postgres@postgres:5432/postgres"
+    DATABASE_URL: "postgres://postgres:postgres@postgres:5432/jjodel"
     DJANGO_SECRET_KEY: "))l@kn-eym6$9w3veu5g5yaa2zjbkrtr)s5)f1)#9+)bl4_2u@"
     DJANGO_DEFAULT_FROM_EMAIL: "test@test.it"
     DJANGO_EMAIL_HOST_USER: "test"

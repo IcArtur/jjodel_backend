@@ -40,6 +40,9 @@ class ViewpointViewSet(viewsets.ModelViewSet):
         try:
             d = self.get_data_dict(request.data)
             vp = Viewpoint.objects.filter(name=kwargs['name'])
+            if not vp.exists():
+                return Response(status=status.HTTP_404_NOT_FOUND,
+                                data={'detail': 'Viewpoint does not exists.'})
             vp.update(**d)
             return Response(status=status.HTTP_200_OK)
         except Exception:

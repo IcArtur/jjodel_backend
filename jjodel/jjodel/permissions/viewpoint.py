@@ -12,8 +12,10 @@ class ViewpointPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         """Global auth method, check user, authentication and membership."""
-        if view.action in ['list', 'update']:
+        if view.action == 'list':
             return True
+        if view.action == 'update':
+            return view.kwargs['username'] == request.user.username
         vpname = view.kwargs["name"]
         vp = Viewpoint.objects.get(name__iexact=vpname)
         # First filter organizations in which the user is in

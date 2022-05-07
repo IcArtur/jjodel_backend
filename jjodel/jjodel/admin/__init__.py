@@ -4,7 +4,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from ..models import User
-from .model import ModelAdmin, ModelViewpointAdmin  # noqa: F401
+from .model import ModelAdmin, ModelViewpointAdmin, ModelOrgVisibilityAdmin, \
+    ModelUserVisibilityAdmin  # noqa: F401
 from .organization import OrganizationAdmin, OrganizationVisibilityAdmin  # noqa: F401
 from .user import (  # noqa: F401
     AdminMemberAdmin,
@@ -18,6 +19,7 @@ from .view import (  # noqa: F401
     ViewRequirementAdmin,
     ViewUserVisibilityAdmin,
 )
-from .viewpoint import ViewpointAdmin, ViewpointViewAdmin  # noqa: F401
+from .viewpoint import ViewpointAdmin, ViewpointViewAdmin, ViewpointOrgVisibilityAdmin, \
+    ViewpointUserVisibilityAdmin  # noqa: F401
 
 admin.site.register(User, UserAdmin)

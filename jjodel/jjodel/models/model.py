@@ -8,7 +8,7 @@ from jjodel.jjodel.models.viewpoint import Viewpoint
 class Model(models.Model):
     """Define model for Model."""
 
-    isPublic = models.BooleanField(verbose_name="Pubblico", default=False)
+    is_public = models.BooleanField(verbose_name="Pubblico", default=False)
     content_xml = models.TextField(verbose_name="Content XML")
     namespace = models.TextField(verbose_name="Namespace", null=True, blank=True)
     name = models.TextField(verbose_name="Nome")
@@ -18,7 +18,7 @@ class Model(models.Model):
 
     def __str__(self):
         """Return str repr for model."""
-        return self.name
+        return self.namespace
 
 
 class ModelViewpoint(models.Model):
@@ -30,3 +30,27 @@ class ModelViewpoint(models.Model):
     def __str__(self):
         """Return str repr for model."""
         return f"{self.model} - {self.viewpoint}"
+
+
+class ModelOrgVisibility(models.Model):
+    """Define model for ModelOrgVisibility."""
+
+    readonly = models.BooleanField(verbose_name="Sola lettura", default=True)
+    organization = models.ForeignKey("jjodel.Organization", on_delete=models.CASCADE)
+    model = models.ForeignKey("jjodel.Model", on_delete=models.CASCADE)
+
+    def __str__(self):
+        """Return str repr for model."""
+        return f"{self.organization} - {self.model} visibility"
+
+
+class ModelUserVisibility(models.Model):
+    """Define model for ModelUserVisibility."""
+
+    readonly = models.BooleanField(verbose_name="Sola lettura", default=True)
+    user = models.ForeignKey("jjodel.User", on_delete=models.CASCADE)
+    model = models.ForeignKey("jjodel.Model", on_delete=models.CASCADE)
+
+    def __str__(self):
+        """Return str repr for model."""
+        return f"{self.user} - {self.model} visibility"

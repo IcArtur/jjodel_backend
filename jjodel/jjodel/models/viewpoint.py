@@ -39,3 +39,15 @@ class ViewpointOrgVisibility(models.Model):
     def __str__(self):
         """Return str repr for model."""
         return f"{self.organization} - {self.viewpoint}"
+
+
+class ViewpointUserVisibility(models.Model):
+    """Define model for ViewpointUserVisibility."""
+
+    readonly = models.BooleanField(verbose_name="Sola lettura", default=True)
+    user = models.ForeignKey("jjodel.User", on_delete=models.CASCADE)
+    viewpoint = models.ForeignKey("jjodel.Viewpoint", on_delete=models.CASCADE)
+
+    def __str__(self):
+        """Return str repr for model."""
+        return f"{self.user} - {self.viewpoint} visibility"

@@ -2,7 +2,8 @@
 
 from django.contrib import admin
 from jjodel.jjodel.models import Viewpoint, ViewpointView
-from jjodel.jjodel.models.viewpoint import ViewpointOrgVisibility
+from jjodel.jjodel.models.viewpoint import ViewpointOrgVisibility, \
+    ViewpointUserVisibility
 
 
 @admin.register(Viewpoint)
@@ -17,3 +18,7 @@ class ViewpointViewAdmin(admin.ModelAdmin):
 @admin.register(ViewpointOrgVisibility)
 class ViewpointOrgVisibilityAdmin(admin.ModelAdmin):
     """Define ViewpointOrgVisibility admin."""
+
+@admin.register(ViewpointUserVisibility)
+class ViewpointUserVisibilityAdmin(admin.ModelAdmin):
+    """Define ViewpointUserVisibility admin."""

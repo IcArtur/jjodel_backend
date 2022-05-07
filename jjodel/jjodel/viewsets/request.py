@@ -27,7 +27,9 @@ class MembershipRequestViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         """Permission check for retrieve method."""
         try:
-            if self.check_admin_permission(request, kwargs["Group"]):
+            is_requester = MembershipRequest.objects.filter(
+                member_id=kwargs["pk"]).exists()
+            if self.check_admin_permission(request, kwargs["Group"]) and is_requester:
                 return super().retrieve(self, request, *args, **kwargs)
             else:
                 return Response(status=status.HTTP_403_FORBIDDEN)

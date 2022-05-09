@@ -4,7 +4,8 @@ from django.db.models import Q
 from jjodel.jjodel.models import AdminMember, GroupMember, Organization, Viewpoint
 from rest_framework import permissions
 
-from jjodel.jjodel.models.viewpoint import ViewpointOrgVisibility
+from jjodel.jjodel.models.viewpoint import ViewpointOrgVisibility, \
+    ViewpointUserVisibility
 
 
 class ViewpointPermission(permissions.BasePermission):
@@ -19,25 +20,21 @@ class ViewpointPermission(permissions.BasePermission):
         vpname = view.kwargs["name"]
         vp = Viewpoint.objects.get(name__iexact=vpname)
         # First filter organizations in which the user is in
-        orgs = Organization.objects.filter(
-            Q(groupmember__member=request.user) | Q(
-                adminmember__admin=request.user) | Q(owner=request.user))
+        orgs = request.user.orgs
         # Then check if those orgs has visibility access on viewpoint
-        orgs = ViewpointOrgVisibility.objects.filter(viewpoint=vp,
-                                                     organization__in=orgs)
-        orgs_visibility = orgs.exists()
+        vp_orgs = ViewpointOrgVisibility.objects.filter(viewpoint=vp,
+                                                        organization__in=orgs)
+        vp_user = ViewpointUserVisibility.objects.filter(viewpoint=vp,
+                                                         user=request.user)
+        visibility = vp_orgs.exists() or vp_user.exists()
         if view.action == 'partial_update':
-            read_only = True
-            for org in orgs:
-                # If any of the ViewpointOrgVisibility has readonly=False read_only
-                # will be false.
-                read_only = read_only and org.readonly
-                # Orgs visib will also be org read-only. If orgs_visibility will be
-                # true the check will pass.
-                orgs_visibility = orgs_visibility and not read_only
+            # Readonly condition
+            not_readonly = vp_orgs.filter(readonly=False).exists() or vp_user.filter(
+                readonly=False).exists()
+            visibility = visibility and not_readonly
         if not vp.is_public:
             # If viewpoint is not public it can be seen by author or shared groups.
-            return request.user == vp.author or orgs_visibility
+            return request.user == vp.author or visibility
         return True
 
     def has_object_permission(self, request, view, obj):

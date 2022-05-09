@@ -10,7 +10,7 @@ class ViewpointSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta class of ViewpointSerializer."""
         model = Viewpoint
-        fields = ["name", "is_public", "author"]
+        fields = ["pk", "name", "is_public", "author"]
 
     def get_author(self, obj):
         """Method serializer."""

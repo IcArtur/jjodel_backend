@@ -4,12 +4,21 @@ from datetime import datetime
 from django.apps import apps  # noqa: F401
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models import Q
 
 
 class User(AbstractUser):
     """Define model for User."""
 
     bio = models.TextField(verbose_name="Bio", null=True, blank=True)
+
+    @property
+    def orgs(self):
+        from jjodel.jjodel.models import Organization
+        """Return the Organizations the user is in."""
+        orgs = Organization.objects.filter(Q(groupmember__member=self) | Q(adminmember__admin=self) | Q(
+                owner=self)).distinct()
+        return orgs
 
 
 class AdminMember(models.Model):

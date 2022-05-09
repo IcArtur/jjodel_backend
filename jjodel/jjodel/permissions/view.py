@@ -21,9 +21,7 @@ class ViewPermission(permissions.BasePermission):
             viewname = view.kwargs["name"]
             view_object = View.objects.get(name__iexact=viewname)
             # First filter organizations in which the user is in
-            orgs = Organization.objects.filter(
-                Q(groupmember__member=request.user) | Q(
-                    adminmember__admin=request.user) | Q(owner=request.user))
+            orgs = request.user.orgs
             # Then check if those orgs has visibility access on viewpoint
             orgs_share = ViewOrgVisibility.objects.filter(view=view_object,
                                                           organization__in=orgs,
@@ -42,9 +40,7 @@ class ViewPermission(permissions.BasePermission):
             # Only if the request user is the author the view can be deleted.
             return request.user == obj.author
         if not obj.is_public:
-            orgs = Organization.objects.filter(
-                Q(groupmember__member=request.user) | Q(
-                    adminmember__admin=request.user) | Q(owner=request.user))
+            orgs = request.user.orgs
             user_share = ViewUserVisibility.objects.filter(view=obj, user=request.user)
             orgs_share = ViewOrgVisibility.objects.filter(view=obj,
                                                           organization__in=orgs).exists()

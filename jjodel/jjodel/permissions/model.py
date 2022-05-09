@@ -20,9 +20,7 @@ class ModelPermission(permissions.BasePermission):
             if model.is_public:
                 return True
             # First filter organizations in which the user is in
-            orgs = Organization.objects.filter(
-                Q(groupmember__member=request.user) | Q(
-                    adminmember__admin=request.user) | Q(owner=request.user))
+            orgs = request.user.orgs
             # Then check if those orgs has visibility access on model
             orgs_share = ModelOrgVisibility.objects.filter(model=model,
                                                           organization__in=orgs,

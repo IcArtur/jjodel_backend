@@ -24,16 +24,10 @@ class OrganizationViewSet(viewsets.ModelViewSet):
             if Organization.objects.filter(name=request.data['name']).exists():
                 return Response(status=status.HTTP_409_CONFLICT,
                                 data={"message": "Organization already exists"})
-            is_public = request.data['isPublic'] == 'true'
-            open_membership = request.data['openMembership'] == 'true'
-            name = request.data['name']
-            mail_domain_required = request.data['mailDomainRequired']
+            d = self.get_data_dict(request.data)
             # Create new organization.
-            Organization.objects.create(isPublic=is_public,
-                                        openMembership=open_membership, name=name,
-                                        mailDomainRequired=mail_domain_required,
-                                        owner=request.user)
-        except Exception:
+            Organization.objects.create(**d, owner=request.user)
+        except Exception as e:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_201_CREATED)
 
@@ -42,13 +36,10 @@ class OrganizationViewSet(viewsets.ModelViewSet):
         try:
             # Check if the name of the orgs is already taken
             organization = Organization.objects.filter(name=kwargs["name"])
-            is_public = request.data['isPublic'] == 'true'
-            open_membership = request.data['openMembership'] == 'true'
-            name = request.data['name']
-            mail_domain_required = request.data['mailDomainRequired']
+            d = self.get_data_dict(request.data)
             owner = User.objects.get(username=request.data['owner'])
             is_admin = AdminMember.objects.filter(organization=organization[0],
-                                               admin=request.user).exists()
+                                                  admin=request.user).exists()
             is_owner = request.user == organization[0].owner
             # Permission check
             if not is_admin and not is_owner:
@@ -58,10 +49,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
                 return Response(status=status.HTTP_403_FORBIDDEN,
                                 data={"message": "Admin can't change owner."})
             # Update the organization.
-            organization.update(isPublic=is_public,
-                                openMembership=open_membership, name=name,
-                                mailDomainRequired=mail_domain_required,
-                                owner=owner)
+            organization.update(**d, owner=owner)
         except Exception:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_200_OK)
@@ -116,3 +104,17 @@ class OrganizationViewSet(viewsets.ModelViewSet):
         ).exists()
         # If the organization is not public user needs to be at least member.
         return organization.isPublic or is_member or is_owner or is_admin
+
+    @staticmethod
+    def get_data_dict(data):
+        """Create dict from data"""
+        d = {'name': data['name']}
+        if data.get('isPublic'):
+            d['isPublic'] = data['isPublic'] == "1"
+        if data.get('openMembership'):
+            d['openMembership'] = data['openMembership'] == "1"
+        if data.get('mail_domain_required'):
+            d['mail_domain_required'] = data['mail_domain_required']
+        if data.get('bio'):
+            d['bio'] = data['bio']
+        return d

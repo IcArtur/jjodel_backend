@@ -6,6 +6,7 @@ from ..models import Model
 
 class ModelSerializer(serializers.ModelSerializer):
     """Serializer for Model model."""
+
     author = serializers.SerializerMethodField()
 
     class Meta:

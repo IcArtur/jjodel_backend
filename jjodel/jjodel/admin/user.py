@@ -4,8 +4,7 @@ from django.contrib import admin
 from jjodel.jjodel.models import (
     AdminMember,
     GroupMember,
-    MembershipRequest,
-    UserVisibility,
+    MembershipRequest
 )
 
 # @admin.register(User)
@@ -27,8 +26,3 @@ class GroupMemberAdmin(admin.ModelAdmin):
 @admin.register(MembershipRequest)
 class MembershipRequestAdmin(admin.ModelAdmin):
     """Define MembershipRequest admin."""
-
-
-@admin.register(UserVisibility)
-class UserVisibilityAdmin(admin.ModelAdmin):
-    """Define UserVisibility admin."""

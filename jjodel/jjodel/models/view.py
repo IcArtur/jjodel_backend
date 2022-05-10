@@ -13,8 +13,9 @@ class View(models.Model):
     )
     description = models.TextField(verbose_name="Descrizione", null=True, blank=True)
     is_public = models.BooleanField(verbose_name="Pubblico", default=False)
-    author = models.ForeignKey("jjodel.User", on_delete=models.CASCADE, null=True,
-                               blank=True)
+    author = models.ForeignKey(
+        "jjodel.User", on_delete=models.CASCADE, null=True, blank=True
+    )
     html = models.TextField(verbose_name="Testo HTML", null=True, blank=True)
 
     def __str__(self):
@@ -37,7 +38,7 @@ class ViewOrgVisibility(models.Model):
 class ViewRequirement(models.Model):
     """Define model for ViewRequirement."""
 
-    oclString = models.TextField(verbose_name="Commento")
+    oclString = models.TextField(verbose_name="Stringa ocl")
     comment = models.TextField(verbose_name="Commento", null=True, blank=True)
     view = models.ForeignKey(View, on_delete=models.CASCADE)
 

@@ -19,21 +19,12 @@ class Organization(models.Model):
     )
     bio = models.TextField(verbose_name="Bio", null=True, blank=True)
     owner = models.ForeignKey(
-        User, on_delete=models.CASCADE, null=True, blank=True,
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
 
     def __str__(self):
         """Return str repr for model."""
         return self.name
-
-
-class OrganizationVisibility(models.Model):
-    """Define model for OrganizationVisibility."""
-
-    readonly = models.BooleanField(verbose_name="Sola lettura", default=True)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    model = models.ForeignKey(Model, on_delete=models.CASCADE)
-
-    def __str__(self):
-        """Return str repr for model."""
-        return f"Visibility {self.organization} - {self.model}"

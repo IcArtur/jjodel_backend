@@ -7,6 +7,8 @@
       <w>secretkey</w>
       <w>viewmodel</w>
       <w>viewpointview</w>
+      <w>viewrequirement</w>
+      <w>viewset</w>
     </words>
   </dictionary>
 </component>

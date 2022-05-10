@@ -12,8 +12,9 @@ class Model(models.Model):
     content_xml = models.TextField(verbose_name="Content XML")
     namespace = models.TextField(verbose_name="Namespace", null=True, blank=True)
     name = models.TextField(verbose_name="Nome")
-    instanceOf = models.ForeignKey("self", on_delete=models.DO_NOTHING, null=True,
-                                   blank=True)
+    instanceOf = models.ForeignKey(
+        "self", on_delete=models.DO_NOTHING, null=True, blank=True
+    )
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):

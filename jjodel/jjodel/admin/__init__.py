@@ -4,14 +4,17 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from ..models import User
-from .model import ModelAdmin, ModelViewpointAdmin, ModelOrgVisibilityAdmin, \
-    ModelUserVisibilityAdmin  # noqa: F401
-from .organization import OrganizationAdmin, OrganizationVisibilityAdmin  # noqa: F401
+from .model import (  # noqa: F401
+    ModelAdmin,
+    ModelOrgVisibilityAdmin,
+    ModelUserVisibilityAdmin,
+    ModelViewpointAdmin,
+)
+from .organization import OrganizationAdmin  # noqa: F401
 from .user import (  # noqa: F401
     AdminMemberAdmin,
     GroupMemberAdmin,
     MembershipRequestAdmin,
-    UserVisibilityAdmin,
 )
 from .view import (  # noqa: F401
     ViewAdmin,
@@ -19,7 +22,11 @@ from .view import (  # noqa: F401
     ViewRequirementAdmin,
     ViewUserVisibilityAdmin,
 )
-from .viewpoint import ViewpointAdmin, ViewpointViewAdmin, ViewpointOrgVisibilityAdmin, \
-    ViewpointUserVisibilityAdmin  # noqa: F401
+from .viewpoint import (  # noqa: F401
+    ViewpointAdmin,
+    ViewpointOrgVisibilityAdmin,
+    ViewpointUserVisibilityAdmin,
+    ViewpointViewAdmin,
+)
 
 admin.site.register(User, UserAdmin)

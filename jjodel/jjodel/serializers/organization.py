@@ -12,5 +12,11 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
         model = Organization
         # Change those fields to display different things on API response.
-        fields = ["pk", "name", "isPublic", "openMembership", "mailDomainRequired",
-                  "owner"]
+        fields = [
+            "pk",
+            "name",
+            "isPublic",
+            "openMembership",
+            "mailDomainRequired",
+            "owner",
+        ]

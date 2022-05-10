@@ -1,17 +1,19 @@
 """ViewpointUserVisibility serializer for DRF. """
-from rest_framework import serializers
 from jjodel.jjodel.models.viewpoint import ViewpointUserVisibility
+from rest_framework import serializers
 
 
 class ViewpointUserVisibilitySerializer(serializers.ModelSerializer):
     """Serializer for ViewpointUserVisibility model."""
+
     user = serializers.SerializerMethodField()
     viewpoint = serializers.SerializerMethodField()
 
     class Meta:
         """Meta class of ViewpointUserVisibilitySerializer."""
+
         model = ViewpointUserVisibility
-        fields = '__all__'
+        fields = "__all__"
 
     def get_user(self, obj):
         """Method serializer."""

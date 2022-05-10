@@ -1,5 +1,5 @@
 """ViewUserVisibility file of permission package."""
-from jjodel.jjodel.models import ViewOrgVisibility, ViewUserVisibility, View
+from jjodel.jjodel.models import View, ViewOrgVisibility, ViewUserVisibility
 from rest_framework import permissions
 
 
@@ -8,7 +8,7 @@ class ShareVisibilityPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         """Global auth method."""
-        author = view.kwargs['username']
+        author = view.kwargs["username"]
         if request.user.username != author:
             return False
         return True

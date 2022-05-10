@@ -15,9 +15,11 @@ class User(AbstractUser):
     @property
     def orgs(self):
         from jjodel.jjodel.models import Organization
+
         """Return the Organizations the user is in."""
-        orgs = Organization.objects.filter(Q(groupmember__member=self) | Q(adminmember__admin=self) | Q(
-                owner=self)).distinct()
+        orgs = Organization.objects.filter(
+            Q(groupmember__member=self) | Q(adminmember__admin=self) | Q(owner=self)
+        ).distinct()
         return orgs
 
 
@@ -73,15 +75,3 @@ class MembershipRequest(models.Model):
     def __str__(self):
         """Return str repr for model."""
         return f"{self.member} - {self.organization}"
-
-
-class UserVisibility(models.Model):
-    """Define model for UserVisibility."""
-
-    readonly = models.BooleanField(verbose_name="Sola lettura", default=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    model = models.ForeignKey("jjodel.Model", on_delete=models.CASCADE)
-
-    def __str__(self):
-        """Return str repr for model."""
-        return f"{self.user} - {self.model}"

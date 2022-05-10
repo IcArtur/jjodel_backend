@@ -9,7 +9,7 @@ class UserPermission(permissions.BasePermission):
         """Global permission method."""
         try:
             # Registration, no permission required.
-            if view.action == 'create':
+            if view.action == "create":
                 return True
             # Only user can see his details.
             is_legit = view.kwargs["username"] == request.user.username

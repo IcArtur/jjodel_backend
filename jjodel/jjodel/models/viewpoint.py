@@ -2,7 +2,6 @@
 
 from django.apps import apps  # noqa: F401
 from django.db import models
-
 from jjodel.jjodel.models.view import View
 
 
@@ -11,8 +10,10 @@ class Viewpoint(models.Model):
 
     name = models.CharField(verbose_name="Nome", max_length=255)
     is_public = models.BooleanField(verbose_name="Pubblico", default=False)
-    author = models.ForeignKey("jjodel.User", on_delete=models.CASCADE, null=True,
-                               blank=True)
+    author = models.ForeignKey(
+        "jjodel.User", on_delete=models.CASCADE, null=True, blank=True
+    )
+
     def __str__(self):
         """Return str repr for model."""
         return self.name

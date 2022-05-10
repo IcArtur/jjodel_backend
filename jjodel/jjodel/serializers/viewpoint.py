@@ -6,9 +6,12 @@ from ..models import Viewpoint
 
 class ViewpointSerializer(serializers.ModelSerializer):
     """Serializer for Viewpoint model."""
+
     author = serializers.SerializerMethodField()
+
     class Meta:
         """Meta class of ViewpointSerializer."""
+
         model = Viewpoint
         fields = ["pk", "name", "is_public", "author"]
 

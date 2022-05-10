@@ -1,7 +1,12 @@
 """MembershipRequest REST Api viewset."""
-from jjodel.jjodel.models import AdminMember, Organization, User, MembershipRequest, \
-    GroupMember
-from jjodel.jjodel.serializers.user import UserSerializer, MembershipRequestSerializer
+from jjodel.jjodel.models import (
+    AdminMember,
+    GroupMember,
+    MembershipRequest,
+    Organization,
+    User,
+)
+from jjodel.jjodel.serializers.user import MembershipRequestSerializer, UserSerializer
 from rest_framework import status, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
@@ -28,7 +33,8 @@ class MembershipRequestViewSet(viewsets.ModelViewSet):
         """Permission check for retrieve method."""
         try:
             is_requester = MembershipRequest.objects.filter(
-                member_id=kwargs["pk"]).exists()
+                member_id=kwargs["pk"]
+            ).exists()
             if self.check_admin_permission(request, kwargs["Group"]) and is_requester:
                 return super().retrieve(self, request, *args, **kwargs)
             else:
@@ -53,8 +59,8 @@ class MembershipRequestViewSet(viewsets.ModelViewSet):
                 else:
                     # Add a request for the user
                     MembershipRequest.objects.update_or_create(
-                        organization=organization,
-                        member=user)
+                        organization=organization, member=user
+                    )
             else:
                 # Only the user can request membership.
                 return Response(status=status.HTTP_403_FORBIDDEN)
@@ -68,8 +74,9 @@ class MembershipRequestViewSet(viewsets.ModelViewSet):
             user = User.objects.get(username=kwargs["pk"])
             organization = Organization.objects.get(name=kwargs["Group"])
             # MembershipRequest user, admin and owner can cancel requests.
-            if request.user == user or self.check_admin_permission(request,
-                                                                   kwargs["Group"]):
+            if request.user == user or self.check_admin_permission(
+                request, kwargs["Group"]
+            ):
                 MembershipRequest.objects.get(
                     member=user, organization=organization
                 ).delete()
@@ -83,13 +90,13 @@ class MembershipRequestViewSet(viewsets.ModelViewSet):
         """Get different serializer based on different actions."""
         # if self.action == 'list':
         #     return MembershipRequestSerializer
-        if self.action == 'retrieve':
+        if self.action == "retrieve":
             return UserSerializer
         return MembershipRequestSerializer
 
     def get_queryset(self):
         """Define queryset for AdminMembersViewSet class. This filters the admin."""
-        if self.action == 'retrieve':
+        if self.action == "retrieve":
             return User.objects.filter()
         group_name = self.kwargs["Group"]
         return MembershipRequest.objects.filter(organization__name=group_name)

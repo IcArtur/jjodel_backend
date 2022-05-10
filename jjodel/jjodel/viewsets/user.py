@@ -1,11 +1,10 @@
 """User REST Api viewset."""
-from rest_framework import viewsets, status
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.response import Response
-
 from jjodel.jjodel.models import User
 from jjodel.jjodel.permissions.user import UserPermission
 from jjodel.jjodel.serializers.user import UserSerializer
+from rest_framework import status, viewsets
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.response import Response
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -14,7 +13,7 @@ class UserViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     serializer_class = UserSerializer
     permission_classes = [UserPermission]
-    lookup_field = 'username'
+    lookup_field = "username"
     queryset = User.objects.filter()
 
     def create(self, request, *args, **kwargs):
@@ -31,12 +30,12 @@ class UserViewSet(viewsets.ModelViewSet):
         """Update user."""
         try:
             d = self.get_data_dict(request.data)
-            user = User.objects.filter(username=request.data['username'])
+            user = User.objects.filter(username=request.data["username"])
             user.update(**d)
-            if request.data.get('password'):
+            if request.data.get("password"):
                 # Need and user instance to change pass, can'd do it on slice queryset.
-                user_instance = User.objects.get(username=request.data['username'])
-                user_instance.set_password(request.data['password'])
+                user_instance = User.objects.get(username=request.data["username"])
+                user_instance.set_password(request.data["password"])
                 user_instance.save()
             return Response(status=status.HTTP_200_OK)
         except Exception:
@@ -45,15 +44,15 @@ class UserViewSet(viewsets.ModelViewSet):
     @staticmethod
     def get_data_dict(data):
         """Create dict from data"""
-        d = {'username': data['username']}
-        if data.get('name'):
-            d['first_name'] = data['name']
-        if data.get('surname'):
-            d['last_name'] = data['surname']
-        if data.get('bio'):
-            d['bio'] = data['bio']
-        if data.get('mail'):
-            d['email'] = data['mail']
-        if data.get('password'):
-            d['password'] = data['password']
+        d = {"username": data["username"]}
+        if data.get("name"):
+            d["first_name"] = data["name"]
+        if data.get("surname"):
+            d["last_name"] = data["surname"]
+        if data.get("bio"):
+            d["bio"] = data["bio"]
+        if data.get("mail"):
+            d["email"] = data["mail"]
+        if data.get("password"):
+            d["password"] = data["password"]
         return d

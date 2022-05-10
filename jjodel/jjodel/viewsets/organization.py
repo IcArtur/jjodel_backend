@@ -1,10 +1,9 @@
 """Organization REST Api viewset."""
-from rest_framework import viewsets, status
+from jjodel.jjodel.models import AdminMember, GroupMember, Organization, User
+from jjodel.jjodel.serializers.organization import OrganizationSerializer
+from rest_framework import status, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
-
-from jjodel.jjodel.models import Organization, User, GroupMember, AdminMember
-from jjodel.jjodel.serializers.organization import OrganizationSerializer
 
 
 class OrganizationViewSet(viewsets.ModelViewSet):
@@ -12,7 +11,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
 
     authentication_classes = [TokenAuthentication]
     serializer_class = OrganizationSerializer
-    lookup_field = 'name'
+    lookup_field = "name"
 
     def update(self, request, *args, **kwargs):
         """PUT method for organization."""
@@ -21,9 +20,11 @@ class OrganizationViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         try:
             # Check if the name of the orgs is already taken
-            if Organization.objects.filter(name=request.data['name']).exists():
-                return Response(status=status.HTTP_409_CONFLICT,
-                                data={"message": "Organization already exists"})
+            if Organization.objects.filter(name=request.data["name"]).exists():
+                return Response(
+                    status=status.HTTP_409_CONFLICT,
+                    data={"message": "Organization already exists"},
+                )
             d = self.get_data_dict(request.data)
             # Create new organization.
             Organization.objects.create(**d, owner=request.user)
@@ -37,17 +38,20 @@ class OrganizationViewSet(viewsets.ModelViewSet):
             # Check if the name of the orgs is already taken
             organization = Organization.objects.filter(name=kwargs["name"])
             d = self.get_data_dict(request.data)
-            owner = User.objects.get(username=request.data['owner'])
-            is_admin = AdminMember.objects.filter(organization=organization[0],
-                                                  admin=request.user).exists()
+            owner = User.objects.get(username=request.data["owner"])
+            is_admin = AdminMember.objects.filter(
+                organization=organization[0], admin=request.user
+            ).exists()
             is_owner = request.user == organization[0].owner
             # Permission check
             if not is_admin and not is_owner:
                 return Response(status=status.HTTP_403_FORBIDDEN)
             # Only the owner can change the owner
             if organization[0].owner != owner and request.user != organization[0].owner:
-                return Response(status=status.HTTP_403_FORBIDDEN,
-                                data={"message": "Admin can't change owner."})
+                return Response(
+                    status=status.HTTP_403_FORBIDDEN,
+                    data={"message": "Admin can't change owner."},
+                )
             # Update the organization.
             organization.update(**d, owner=owner)
         except Exception:
@@ -81,11 +85,11 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """Define queryset for OrganizationViewSet class. This filters organizations."""
         # I considered the bool value true when 1 is passed.
-        if self.action == 'list':
-            is_regexp = self.request.query_params['regexp'] == '1'
-            name = self.request.query_params['name']
+        if self.action == "list":
+            is_regexp = self.request.query_params["regexp"] == "1"
+            name = self.request.query_params["name"]
             if is_regexp:
-                qs = Organization.objects.filter(name__regex=rf'{name}')
+                qs = Organization.objects.filter(name__regex=rf"{name}")
             else:
                 qs = Organization.objects.filter(name__icontains=name)
         else:
@@ -96,8 +100,9 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     def get_retrieve_permissions(request, groupname):
         """Permission for retrieve method."""
         organization = Organization.objects.get(name=groupname)
-        is_member = GroupMember.objects.filter(organization_fk__name=groupname,
-                                               member=request.user).exists()
+        is_member = GroupMember.objects.filter(
+            organization_fk__name=groupname, member=request.user
+        ).exists()
         is_owner = organization.owner == request.user
         is_admin = AdminMember.objects.filter(
             admin=request.user, organization=organization
@@ -108,13 +113,13 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     @staticmethod
     def get_data_dict(data):
         """Create dict from data"""
-        d = {'name': data['name']}
-        if data.get('isPublic'):
-            d['isPublic'] = data['isPublic'] == "1"
-        if data.get('openMembership'):
-            d['openMembership'] = data['openMembership'] == "1"
-        if data.get('mail_domain_required'):
-            d['mail_domain_required'] = data['mail_domain_required']
-        if data.get('bio'):
-            d['bio'] = data['bio']
+        d = {"name": data["name"]}
+        if data.get("isPublic"):
+            d["isPublic"] = data["isPublic"] == "1"
+        if data.get("openMembership"):
+            d["openMembership"] = data["openMembership"] == "1"
+        if data.get("mail_domain_required"):
+            d["mail_domain_required"] = data["mail_domain_required"]
+        if data.get("bio"):
+            d["bio"] = data["bio"]
         return d

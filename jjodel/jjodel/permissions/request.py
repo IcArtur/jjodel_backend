@@ -18,24 +18,24 @@ class RequestPermission(permissions.BasePermission):
         self.is_admin = AdminMember.objects.filter(
             organization__name=self.group_name, member=request.user
         ).exists()
-        if view.action == 'list' and not self.is_auth and not self.is_admin:
+        if view.action == "list" and not self.is_auth and not self.is_admin:
             return False
         else:
             return True
 
     def has_object_permission(self, request, view, obj):
         """Object permission method."""
-        print('enter has_object_permission')
+        print("enter has_object_permission")
         # only allow the owner to make changes
         user = request.user
         if self.is_admin:
             return True
-        if view.action == 'destroy':
-            print('has_object_permission true: create')
+        if view.action == "destroy":
+            print("has_object_permission true: create")
             return True
         elif user == request.user:
-            print('has_object_permission true: owner')
+            print("has_object_permission true: owner")
             return True  # in practice, an editor will have a profile
         else:
-            print('has_object_permission false')
+            print("has_object_permission false")
             return False

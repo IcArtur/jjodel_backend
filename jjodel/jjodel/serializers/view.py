@@ -15,13 +15,14 @@ from ..models import View
 class ViewSerializer(serializers.ModelSerializer):
     """Serializer for View model."""
     author = serializers.SerializerMethodField()
+
     # Those commented things are to String the BinaryField, don't know if needed.
     # preview_image = BinaryField()
 
     class Meta:
         """Meta class of ViewSerializer."""
         model = View
-        fields = ['name','preview_image', 'description', 'is_public', 'author', 'html']
+        fields = ['name', 'preview_image', 'description', 'is_public', 'author', 'html']
 
     def get_author(self, obj):
         """Method serializer."""

@@ -18,4 +18,22 @@ urlpatterns = [
     path("user/<username>/", include("jjodel.jjodel.routers.viewpoint")),
     path("user/<username>/", include("jjodel.jjodel.routers.view")),
 
+    # View Visibility
+    path("user/<username>/view/<viewname>/",
+         include("jjodel.jjodel.routers.user_visibility.user_view")),
+    path("user/<username>/view/<viewname>/",
+         include("jjodel.jjodel.routers.org_visibility.org_view")),
+
+    # Viewpoint Visibility
+    path("user/<username>/viewpoint/<vpname>/",
+         include("jjodel.jjodel.routers.user_visibility.user_viewpoint")),
+    path("user/<username>/viewpoint/<vpname>/",
+         include("jjodel.jjodel.routers.org_visibility.org_viewpoint")),
+
+    # Model Visibility
+    path("user/<username>/model/<namespace>/",
+         include("jjodel.jjodel.routers.user_visibility.user_model")),
+    path("user/<username>/model/<namespace>/",
+         include("jjodel.jjodel.routers.org_visibility.org_model")),
+
 ]

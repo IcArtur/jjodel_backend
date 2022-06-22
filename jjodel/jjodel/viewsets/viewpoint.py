@@ -77,4 +77,6 @@ class ViewpointViewSet(viewsets.ModelViewSet):
             # Update by username
             author = User.objects.get(username=data["author"])
             d["author"] = author
+        if data.get("coordinates"):
+            d["coordinates"] = data["coordinates"]
         return d

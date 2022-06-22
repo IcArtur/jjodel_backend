@@ -13,6 +13,7 @@ class Viewpoint(models.Model):
     author = models.ForeignKey(
         "jjodel.User", on_delete=models.CASCADE, null=True, blank=True
     )
+    coordinates = models.JSONField(verbose_name="Coordinate", null=True, blank=True)
 
     def __str__(self):
         """Return str repr for model."""

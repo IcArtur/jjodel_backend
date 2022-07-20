@@ -15,9 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, re_path
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     # re_path("/", admin.site.urls),
-    re_path("api/v1/", include("jjodel.jjodel.urls")),
+    re_path("api/v1/", include("jjodel.model.urls")),
+    re_path("api/v1/", include("jjodel.organization.urls")),
+    re_path("api/v1/", include("jjodel.user.urls")),
+    re_path("api/v1/", include("jjodel.view.urls")),
+    re_path("api/v1/", include("jjodel.viewpoint.urls")),
     re_path("", admin.site.urls),
+    re_path("token/", obtain_auth_token, name="obtain_auth_token"),
+
+    re_path("api/v1/", include("jjodel.model.routers.model")),
+    re_path("api/v1/", include("jjodel.user.routers.user")),
 ]

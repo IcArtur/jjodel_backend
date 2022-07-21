@@ -1,13 +1,12 @@
 """Viewpoint REST Api viewset."""
-from rest_framework import status, viewsets
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.response import Response
-
 from jjodel.user.models import User
 from jjodel.view.models import View
 from jjodel.viewpoint.models import Viewpoint, ViewpointView
 from jjodel.viewpoint.permissions import ViewpointPermission
 from jjodel.viewpoint.serializers import ViewpointSerializer, ViewpointViewSerializer
+from rest_framework import status, viewsets
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.response import Response
 
 
 class ViewpointViewSet(viewsets.ModelViewSet):
@@ -72,7 +71,7 @@ class ViewpointViewSet(viewsets.ModelViewSet):
 
     @staticmethod
     def get_data_dict(data):
-        """Create dict from data"""
+        """Create dict from data."""
         d = {"name": data["vpname"]}
         if data.get("isPublic"):
             d["is_public"] = data["isPublic"] == "1"
@@ -91,11 +90,10 @@ class ViewpointViewViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     serializer_class = ViewpointViewSerializer
     # permission_classes = [ShareVisibilityPermission]
-    lookup_field = 'view__name'
+    lookup_field = "view__name"
 
     def get_queryset(self):
-        """Define queryset for ViewpointViewViewSet class. This filters
-        ViewpointView. """
+        """Queryset for ViewpointViewViewSet class. This filters ViewpointView."""
         return ViewpointView.objects.filter(viewpoint__name=self.kwargs["vpname"])
 
     def update(self, request, *args, **kwargs):
@@ -105,5 +103,5 @@ class ViewpointViewViewSet(viewsets.ModelViewSet):
             vp = Viewpoint.objects.get(name=kwargs["vpname"])
             ViewpointView.objects.update_or_create(view=view, viewpoint=vp)
             return Response(status=status.HTTP_200_OK)
-        except Exception as e:
+        except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)

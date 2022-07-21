@@ -1,7 +1,6 @@
-"""ModelOrgVisibility serializer for DRF. """
-from rest_framework import serializers
-
+"""ModelOrgVisibility serializer for DRF."""
 from jjodel.model.models import ModelOrgVisibility
+from rest_framework import serializers
 
 
 class ModelOrgVisibilitySerializer(serializers.ModelSerializer):
@@ -17,9 +16,9 @@ class ModelOrgVisibilitySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_organization(self, obj):
-        """Method serializer."""
+        """Get Method serializer."""
         return obj.organization.name
 
     def get_model(self, obj):
-        """Method serializer."""
+        """Get Method serializer."""
         return obj.model.namespace

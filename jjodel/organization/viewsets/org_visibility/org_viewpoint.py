@@ -1,13 +1,13 @@
 """ViewpointOrgVisibility REST Api viewset."""
+from jjodel.organization.models import Organization
+from jjodel.organization.permissions import ShareVisibilityPermission
+from jjodel.organization.serializers.org_visibility.org_viewpoint import (
+    ViewpointOrgVisibilitySerializer,
+)
+from jjodel.viewpoint.models import Viewpoint, ViewpointOrgVisibility
 from rest_framework import status, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
-
-from jjodel.organization.models import Organization
-from jjodel.organization.permissions import ShareVisibilityPermission
-from jjodel.organization.serializers.org_visibility.org_viewpoint import \
-    ViewpointOrgVisibilitySerializer
-from jjodel.viewpoint.models import ViewpointOrgVisibility, Viewpoint
 
 
 class ViewpointOrgVisibilityViewSet(viewsets.ModelViewSet):
@@ -39,5 +39,5 @@ class ViewpointOrgVisibilityViewSet(viewsets.ModelViewSet):
                 organization=organization, viewpoint=vp
             ).update(readonly=readonly)
             return Response(status=status.HTTP_200_OK)
-        except Exception as e:
+        except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)

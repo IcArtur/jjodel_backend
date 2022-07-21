@@ -1,11 +1,10 @@
 """Organization REST Api viewset."""
+from jjodel.organization.models import Organization
+from jjodel.organization.serializers.serializers import OrganizationSerializer
+from jjodel.user.models import AdminMember, GroupMember, User
 from rest_framework import status, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
-
-from jjodel.organization.models import Organization
-from jjodel.organization.serializers.serializers import OrganizationSerializer
-from jjodel.user.models import User, AdminMember, GroupMember
 
 
 class OrganizationViewSet(viewsets.ModelViewSet):
@@ -30,7 +29,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
             d = self.get_data_dict(request.data)
             # Create new organization.
             Organization.objects.create(**d, owner=request.user)
-        except Exception as e:
+        except Exception:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_201_CREATED)
 
@@ -114,7 +113,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
 
     @staticmethod
     def get_data_dict(data):
-        """Create dict from data"""
+        """Create dict from data."""
         d = {"name": data["name"]}
         if data.get("isPublic"):
             d["isPublic"] = data["isPublic"] == "1"

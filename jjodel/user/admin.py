@@ -2,7 +2,6 @@
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-
 from jjodel.user.models import AdminMember, GroupMember, MembershipRequest, User
 
 admin.site.register(User, UserAdmin)

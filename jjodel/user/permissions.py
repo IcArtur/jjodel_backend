@@ -1,8 +1,7 @@
 """Member file of permission package."""
-from rest_framework import permissions
-
 from jjodel.organization.models import Organization
-from jjodel.user.models import GroupMember, AdminMember
+from jjodel.user.models import AdminMember, GroupMember
+from rest_framework import permissions
 
 
 class IsGroupMember(permissions.BasePermission):

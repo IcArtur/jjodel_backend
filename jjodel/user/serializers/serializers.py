@@ -1,7 +1,6 @@
 """User serializer file, used to Serialize User model for DRF."""
-from rest_framework import serializers
-
 from jjodel.user.models import MembershipRequest, User
+from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):

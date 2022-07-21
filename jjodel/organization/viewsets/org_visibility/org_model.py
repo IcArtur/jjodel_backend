@@ -1,5 +1,5 @@
 """ModelOrgVisibility REST Api viewset."""
-from jjodel.model.models import ModelOrgVisibility, Model
+from jjodel.model.models import Model, ModelOrgVisibility
 from jjodel.organization.models import Organization
 from jjodel.organization.permissions import ShareVisibilityPermission
 from jjodel.organization.serializers.org_visibility.org_model import (
@@ -39,5 +39,5 @@ class ModelOrgVisibilityViewSet(viewsets.ModelViewSet):
                 organization=organization, model=model
             ).update(readonly=readonly)
             return Response(status=status.HTTP_200_OK)
-        except Exception as e:
+        except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)

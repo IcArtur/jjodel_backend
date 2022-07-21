@@ -1,9 +1,12 @@
 """Viewpoint admin module."""
 
 from django.contrib import admin
-
-from jjodel.viewpoint.models import Viewpoint, ViewpointView, ViewpointOrgVisibility, \
-    ViewpointUserVisibility
+from jjodel.viewpoint.models import (
+    Viewpoint,
+    ViewpointOrgVisibility,
+    ViewpointUserVisibility,
+    ViewpointView,
+)
 
 
 @admin.register(Viewpoint)

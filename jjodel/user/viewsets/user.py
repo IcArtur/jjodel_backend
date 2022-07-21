@@ -1,11 +1,10 @@
 """User REST Api viewset."""
-from rest_framework import status, viewsets
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.response import Response
-
 from jjodel.user.models import User
 from jjodel.user.permissions import UserPermission
 from jjodel.user.serializers.serializers import UserSerializer
+from rest_framework import status, viewsets
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.response import Response
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -44,7 +43,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @staticmethod
     def get_data_dict(data):
-        """Create dict from data"""
+        """Create dict from data."""
         d = {"username": data["username"]}
         if data.get("name"):
             d["first_name"] = data["name"]

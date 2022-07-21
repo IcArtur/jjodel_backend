@@ -1,7 +1,6 @@
-"""ViewpointUserVisibility serializer for DRF. """
-from rest_framework import serializers
-
+"""ViewpointUserVisibility serializer for DRF."""
 from jjodel.viewpoint.models import ViewpointUserVisibility
+from rest_framework import serializers
 
 
 class ViewpointUserVisibilitySerializer(serializers.ModelSerializer):
@@ -17,9 +16,9 @@ class ViewpointUserVisibilitySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_user(self, obj):
-        """Method serializer."""
+        """Get Method serializer."""
         return obj.user.username
 
     def get_viewpoint(self, obj):
-        """Method serializer."""
+        """Get Method serializer."""
         return obj.viewpoint.name

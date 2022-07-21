@@ -1,6 +1,9 @@
+"""App file of model."""
 from django.apps import AppConfig
 
 
 class ModelConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'jjodel.model'
+    """ModelConfig class."""
+
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "jjodel.model"

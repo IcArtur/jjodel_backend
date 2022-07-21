@@ -1,7 +1,6 @@
 """View file of permission package."""
-from rest_framework import permissions
-
 from jjodel.view.models import View, ViewOrgVisibility, ViewUserVisibility
+from rest_framework import permissions
 
 
 class ViewPermission(permissions.BasePermission):

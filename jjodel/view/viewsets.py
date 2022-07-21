@@ -1,13 +1,12 @@
 """View REST Api viewset."""
-from rest_framework import status, viewsets
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.response import Response
-
 from jjodel.organization.permissions import ShareVisibilityPermission
 from jjodel.user.models import User
 from jjodel.view.models import View, ViewRequirement
 from jjodel.view.permissions import ViewPermission
-from jjodel.view.serializers import ViewSerializer, ViewRequirementSerializer
+from jjodel.view.serializers import ViewRequirementSerializer, ViewSerializer
+from rest_framework import status, viewsets
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.response import Response
 
 
 class ViewViewSet(viewsets.ModelViewSet):
@@ -57,7 +56,7 @@ class ViewViewSet(viewsets.ModelViewSet):
                 )
             view_qs.update(**d)
             return Response(status=status.HTTP_200_OK)
-        except Exception as e:
+        except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
@@ -77,7 +76,7 @@ class ViewViewSet(viewsets.ModelViewSet):
 
     @staticmethod
     def get_data_dict(data):
-        """Create dict from data"""
+        """Create dict from data."""
         d = {"name": data["viewname"]}
         if data.get("isPublic"):
             d["is_public"] = data["isPublic"] == "1"
@@ -117,21 +116,21 @@ class ViewRequirementViewSet(viewsets.ModelViewSet):
             view = View.objects.get(name=kwargs["viewname"])
             ViewRequirement.objects.create(**d, view=view)
             return Response(status=status.HTTP_201_CREATED)
-        except Exception as e:
+        except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def partial_update(self, request, *args, **kwargs):
-        """PATCH method, update"""
+        """PATCH method, update."""
         try:
             d = self.get_data_dict(request.data)
             ViewRequirement.objects.filter(pk=kwargs["pk"]).update(**d)
             return Response(status=status.HTTP_200_OK)
-        except Exception as e:
+        except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
     @staticmethod
     def get_data_dict(data):
-        """Create dict from data"""
+        """Create dict from data."""
         d = {"oclString": data["oclString"]}
         if data.get("comment"):
             d["comment"] = data["comment"]

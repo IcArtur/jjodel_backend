@@ -1,13 +1,13 @@
 """ViewUserVisibility REST Api viewset."""
+from jjodel.organization.permissions import ShareVisibilityPermission
+from jjodel.user.models import User
+from jjodel.user.serializers.user_visibility.user_view import (
+    ViewUserVisibilitySerializer,
+)
+from jjodel.view.models import View, ViewUserVisibility
 from rest_framework import status, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
-
-from jjodel.organization.permissions import ShareVisibilityPermission
-from jjodel.user.models import User
-from jjodel.user.serializers.user_visibility.user_view import \
-    ViewUserVisibilitySerializer
-from jjodel.view.models import View, ViewUserVisibility
 
 
 class ViewUserVisibilityViewSet(viewsets.ModelViewSet):
@@ -37,5 +37,5 @@ class ViewUserVisibilityViewSet(viewsets.ModelViewSet):
                 readonly=readonly
             )
             return Response(status=status.HTTP_200_OK)
-        except Exception as e:
+        except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)

@@ -27,7 +27,9 @@ class ViewOrgVisibility(models.Model):
     """Define model for ViewOrgVisibility."""
 
     readonly = models.BooleanField(verbose_name="Sola lettura", default=True)
-    organization = models.ForeignKey("organization.Organization", on_delete=models.CASCADE)
+    organization = models.ForeignKey(
+        "organization.Organization", on_delete=models.CASCADE
+    )
     view = models.ForeignKey(View, on_delete=models.CASCADE)
 
     def __str__(self):

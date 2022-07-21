@@ -1,9 +1,12 @@
 """View admin module."""
 
 from django.contrib import admin
-
-from jjodel.view.models import View, ViewOrgVisibility, ViewRequirement, \
-    ViewUserVisibility
+from jjodel.view.models import (
+    View,
+    ViewOrgVisibility,
+    ViewRequirement,
+    ViewUserVisibility,
+)
 
 
 @admin.register(View)

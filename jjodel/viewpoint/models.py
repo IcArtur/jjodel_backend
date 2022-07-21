@@ -2,7 +2,6 @@
 
 from django.apps import apps  # noqa: F401
 from django.db import models
-
 from jjodel.view.models import View
 
 
@@ -36,7 +35,9 @@ class ViewpointOrgVisibility(models.Model):
     """Define model for ViewpointOrgVisibility."""
 
     readonly = models.BooleanField(verbose_name="Sola lettura", default=True)
-    organization = models.ForeignKey("organization.Organization", on_delete=models.CASCADE)
+    organization = models.ForeignKey(
+        "organization.Organization", on_delete=models.CASCADE
+    )
     viewpoint = models.ForeignKey("viewpoint.Viewpoint", on_delete=models.CASCADE)
 
     def __str__(self):

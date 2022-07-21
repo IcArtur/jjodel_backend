@@ -1,7 +1,6 @@
 """Organization router."""
-from rest_framework.routers import DefaultRouter
-
 from jjodel.organization.viewsets.viewsets import OrganizationViewSet
+from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register("organization", OrganizationViewSet, basename="organization_viewset")

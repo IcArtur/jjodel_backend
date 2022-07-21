@@ -1,7 +1,6 @@
-"""ViewpointOrgVisibility serializer for DRF. """
-from rest_framework import serializers
-
+"""ViewpointOrgVisibility serializer for DRF."""
 from jjodel.viewpoint.models import ViewpointOrgVisibility
+from rest_framework import serializers
 
 
 class ViewpointOrgVisibilitySerializer(serializers.ModelSerializer):
@@ -17,9 +16,9 @@ class ViewpointOrgVisibilitySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_organization(self, obj):
-        """Method serializer."""
+        """Get Method serializer."""
         return obj.organization.name
 
     def get_viewpoint(self, obj):
-        """Method serializer."""
+        """Get Method serializer."""
         return obj.viewpoint.name

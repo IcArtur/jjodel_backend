@@ -1,14 +1,12 @@
 """Model REST Api viewset."""
-from rest_framework import status, viewsets
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.response import Response
-
 from jjodel.model.models import Model, ModelViewpoint
 from jjodel.model.permissions import ModelPermission
 from jjodel.model.serializers import ModelSerializer, ModelViewpointSerializer
-from jjodel.viewpoint.models import Viewpoint
-
 from jjodel.user.models import User
+from jjodel.viewpoint.models import Viewpoint
+from rest_framework import status, viewsets
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.response import Response
 
 
 class ModelViewSet(viewsets.ModelViewSet):
@@ -45,7 +43,7 @@ class ModelViewSet(viewsets.ModelViewSet):
                 )
             model.update(**d)
             return Response(status=status.HTTP_200_OK)
-        except Exception as e:
+        except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
@@ -65,7 +63,7 @@ class ModelViewSet(viewsets.ModelViewSet):
 
     @staticmethod
     def get_data_dict(data):
-        """Create dict from data"""
+        """Create dict from data."""
         d = {"namespace": data["namespace"]}
         if data.get("isPublic"):
             d["is_public"] = data["isPublic"] == "1"
@@ -89,11 +87,10 @@ class ModelViewpointViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     serializer_class = ModelViewpointSerializer
     # permission_classes = [ShareVisibilityPermission]
-    lookup_field = 'viewpoint__name'
+    lookup_field = "viewpoint__name"
 
     def get_queryset(self):
-        """Define queryset for ModelViewpointViewSet class. This filters
-        ModelViewpoint. """
+        """Queryset for ModelViewpointViewSet class. This filters ModelViewpoint."""
         namespace = self.kwargs["namespace"]
         return ModelViewpoint.objects.filter(model__namespace=namespace)
 
@@ -104,5 +101,5 @@ class ModelViewpointViewSet(viewsets.ModelViewSet):
             vp = Viewpoint.objects.get(name=kwargs["viewpoint__name"])
             ModelViewpoint.objects.update_or_create(model=model, viewpoint=vp)
             return Response(status=status.HTTP_200_OK)
-        except Exception as e:
+        except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)

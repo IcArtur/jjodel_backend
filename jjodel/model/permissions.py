@@ -1,9 +1,8 @@
 """Model file of permission package."""
 from django.db.models import Q
-from rest_framework import permissions
-
 from jjodel.model.models import Model, ModelOrgVisibility, ModelUserVisibility
 from jjodel.organization.models import Organization
+from rest_framework import permissions
 
 
 class ModelPermission(permissions.BasePermission):

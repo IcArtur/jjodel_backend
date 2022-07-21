@@ -2,7 +2,6 @@
 
 from django.apps import apps  # noqa: F401
 from django.db import models
-
 from jjodel.user.models import User
 
 

@@ -1,6 +1,9 @@
+"""View apps file."""
 from django.apps import AppConfig
 
 
 class ViewConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'jjodel.view'
+    """ViewConfig class of view package."""
+
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "jjodel.view"

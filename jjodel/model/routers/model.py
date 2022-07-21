@@ -1,7 +1,6 @@
 """Model router."""
-from rest_framework.routers import DefaultRouter
-
 from jjodel.model.viewsets import ModelViewSet
+from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r"model", ModelViewSet, basename="model_viewset")

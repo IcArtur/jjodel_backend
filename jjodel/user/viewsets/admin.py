@@ -1,11 +1,10 @@
 """Admin REST Api viewset."""
+from jjodel.organization.models import Organization
+from jjodel.user.models import AdminMember, User
+from jjodel.user.serializers.serializers import UserSerializer
 from rest_framework import status, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
-
-from jjodel.organization.models import Organization
-from jjodel.user.models import User, AdminMember
-from jjodel.user.serializers.serializers import UserSerializer
 
 
 class AdminMembersViewSet(viewsets.ModelViewSet):
@@ -55,4 +54,3 @@ class AdminMembersViewSet(viewsets.ModelViewSet):
         except Exception:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_200_OK)
-

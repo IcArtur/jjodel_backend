@@ -1,8 +1,10 @@
 """Viewpoint file of permission package."""
+from jjodel.viewpoint.models import (
+    Viewpoint,
+    ViewpointOrgVisibility,
+    ViewpointUserVisibility,
+)
 from rest_framework import permissions
-
-from jjodel.viewpoint.models import Viewpoint, ViewpointOrgVisibility, \
-    ViewpointUserVisibility
 
 
 class ViewpointPermission(permissions.BasePermission):

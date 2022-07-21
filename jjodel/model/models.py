@@ -1,7 +1,6 @@
 """Define Jjodel Model models."""
 from django.apps import apps  # noqa: F401
 from django.db import models
-
 from jjodel.user.models import User
 from jjodel.viewpoint.models import Viewpoint
 
@@ -38,7 +37,9 @@ class ModelOrgVisibility(models.Model):
     """Define model for ModelOrgVisibility."""
 
     readonly = models.BooleanField(verbose_name="Sola lettura", default=True)
-    organization = models.ForeignKey("organization.Organization", on_delete=models.CASCADE)
+    organization = models.ForeignKey(
+        "organization.Organization", on_delete=models.CASCADE
+    )
     model = models.ForeignKey("model.Model", on_delete=models.CASCADE)
 
     def __str__(self):

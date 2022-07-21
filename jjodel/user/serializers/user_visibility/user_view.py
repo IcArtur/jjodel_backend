@@ -1,7 +1,6 @@
 """ViewUserVisibility serializer file, used to ViewUserVisibility model for DRF."""
-from rest_framework import serializers
-
 from jjodel.view.models import ViewUserVisibility
+from rest_framework import serializers
 
 
 class ViewUserVisibilitySerializer(serializers.ModelSerializer):
@@ -17,9 +16,9 @@ class ViewUserVisibilitySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_user(self, obj):
-        """Method serializer."""
+        """Get Method serializer."""
         return obj.user.username
 
     def get_view(self, obj):
-        """Method serializer."""
+        """Get Method serializer."""
         return obj.view.name

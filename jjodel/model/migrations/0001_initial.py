@@ -1,44 +1,92 @@
-from django.db import migrations, models
 import django.db.models.deletion
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Model',
+            name="Model",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('is_public', models.BooleanField(default=False, verbose_name='Pubblico')),
-                ('content_xml', models.TextField(verbose_name='Content XML')),
-                ('namespace', models.TextField(blank=True, null=True, verbose_name='Namespace')),
-                ('name', models.TextField(verbose_name='Nome')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "is_public",
+                    models.BooleanField(default=False, verbose_name="Pubblico"),
+                ),
+                ("content_xml", models.TextField(verbose_name="Content XML")),
+                (
+                    "namespace",
+                    models.TextField(blank=True, null=True, verbose_name="Namespace"),
+                ),
+                ("name", models.TextField(verbose_name="Nome")),
             ],
         ),
         migrations.CreateModel(
-            name='ModelOrgVisibility',
+            name="ModelOrgVisibility",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('readonly', models.BooleanField(default=True, verbose_name='Sola lettura')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "readonly",
+                    models.BooleanField(default=True, verbose_name="Sola lettura"),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ModelUserVisibility',
+            name="ModelUserVisibility",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('readonly', models.BooleanField(default=True, verbose_name='Sola lettura')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "readonly",
+                    models.BooleanField(default=True, verbose_name="Sola lettura"),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ModelViewpoint',
+            name="ModelViewpoint",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('model', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='model.model')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "model",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="model.model"
+                    ),
+                ),
             ],
         ),
     ]

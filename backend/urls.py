@@ -19,10 +19,10 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     re_path("api/v1/", include("jjodel.model.urls")),
-    re_path("api/v1/", include("jjodel.organization.urls")),
-    re_path("api/v1/", include("jjodel.user.urls")),
     re_path("api/v1/", include("jjodel.view.urls")),
     re_path("api/v1/", include("jjodel.viewpoint.urls")),
+    re_path("api/v1/", include("jjodel.organization.urls")),
+    re_path("api/v1/", include("jjodel.user.urls")),
     re_path("admin/", admin.site.urls),
     re_path("token/", obtain_auth_token, name="obtain_auth_token"),
 ]

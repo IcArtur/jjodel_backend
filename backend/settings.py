@@ -24,7 +24,7 @@ class ProjectDefault(Configuration):
     """
 
     # Override deafult Django User Model.
-    AUTH_USER_MODEL = "jjodel.User"
+    AUTH_USER_MODEL = "user.User"
 
     # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -51,7 +51,11 @@ class ProjectDefault(Configuration):
         "django.contrib.staticfiles",
         "rest_framework",
         "rest_framework.authtoken",
-        "jjodel.jjodel",
+        "jjodel.model",
+        "jjodel.organization",
+        "jjodel.user",
+        "jjodel.view",
+        "jjodel.viewpoint",
     ]
     MIDDLEWARE = [
         "django.middleware.security.SecurityMiddleware",

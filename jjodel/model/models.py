@@ -38,8 +38,8 @@ class ModelOrgVisibility(models.Model):
     """Define model for ModelOrgVisibility."""
 
     readonly = models.BooleanField(verbose_name="Sola lettura", default=True)
-    organization = models.ForeignKey("jjodel.Organization", on_delete=models.CASCADE)
-    model = models.ForeignKey("jjodel.Model", on_delete=models.CASCADE)
+    organization = models.ForeignKey("organization.Organization", on_delete=models.CASCADE)
+    model = models.ForeignKey("model.Model", on_delete=models.CASCADE)
 
     def __str__(self):
         """Return str repr for model."""
@@ -50,8 +50,8 @@ class ModelUserVisibility(models.Model):
     """Define model for ModelUserVisibility."""
 
     readonly = models.BooleanField(verbose_name="Sola lettura", default=True)
-    user = models.ForeignKey("jjodel.User", on_delete=models.CASCADE)
-    model = models.ForeignKey("jjodel.Model", on_delete=models.CASCADE)
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
+    model = models.ForeignKey("model.Model", on_delete=models.CASCADE)
 
     def __str__(self):
         """Return str repr for model."""

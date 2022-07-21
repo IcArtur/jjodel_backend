@@ -1,8 +1,8 @@
 """Viewpointuser router."""
-from jjodel.user.viewsets.user_visibility import (
-    ViewpointUserVisibilityViewSet,
-)
 from rest_framework.routers import DefaultRouter
+
+from jjodel.user.viewsets.user_visibility.user_viewpoint import \
+    ViewpointUserVisibilityViewSet
 
 router = DefaultRouter()
 router.register(

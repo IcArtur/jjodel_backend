@@ -1,6 +1,7 @@
 """ViewpointOrgVisibility serializer for DRF. """
-from jjodel.jjodel.models.viewpoint import ViewpointOrgVisibility
 from rest_framework import serializers
+
+from jjodel.viewpoint.models import ViewpointOrgVisibility
 
 
 class ViewpointOrgVisibilitySerializer(serializers.ModelSerializer):

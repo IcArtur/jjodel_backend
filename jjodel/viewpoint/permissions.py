@@ -1,11 +1,8 @@
 """Viewpoint file of permission package."""
-from django.db.models import Q
-from jjodel.jjodel.models import AdminMember, GroupMember, Organization, Viewpoint
-from jjodel.jjodel.models.viewpoint import (
-    ViewpointOrgVisibility,
-    ViewpointUserVisibility,
-)
 from rest_framework import permissions
+
+from jjodel.viewpoint.models import Viewpoint, ViewpointOrgVisibility, \
+    ViewpointUserVisibility
 
 
 class ViewpointPermission(permissions.BasePermission):

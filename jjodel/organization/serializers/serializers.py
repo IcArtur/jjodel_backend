@@ -1,7 +1,7 @@
 """Organization serializer file, used to Organization model for DRF."""
 from rest_framework import serializers
 
-from ..models import Organization
+from jjodel.organization.models import Organization
 
 
 class OrganizationSerializer(serializers.ModelSerializer):

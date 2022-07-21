@@ -1,9 +1,11 @@
 """Organization REST Api viewset."""
-from jjodel.jjodel.models import AdminMember, GroupMember, Organization, User
-from jjodel.jjodel.serializers.organization import OrganizationSerializer
 from rest_framework import status, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
+
+from jjodel.organization.models import Organization
+from jjodel.organization.serializers.serializers import OrganizationSerializer
+from jjodel.user.models import User, AdminMember, GroupMember
 
 
 class OrganizationViewSet(viewsets.ModelViewSet):

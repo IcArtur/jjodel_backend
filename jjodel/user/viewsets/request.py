@@ -1,15 +1,11 @@
 """MembershipRequest REST Api viewset."""
-from jjodel.jjodel.models import (
-    AdminMember,
-    GroupMember,
-    MembershipRequest,
-    Organization,
-    User,
-)
-from jjodel.jjodel.serializers.user import MembershipRequestSerializer, UserSerializer
 from rest_framework import status, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
+
+from jjodel.organization.models import Organization
+from jjodel.user.models import MembershipRequest, User, GroupMember, AdminMember
+from jjodel.user.serializers.serializers import MembershipRequestSerializer
 
 
 class MembershipRequestViewSet(viewsets.ModelViewSet):

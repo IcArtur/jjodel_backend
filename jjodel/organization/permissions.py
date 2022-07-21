@@ -1,5 +1,4 @@
 """ViewUserVisibility file of permission package."""
-from jjodel.jjodel.models import View, ViewOrgVisibility, ViewUserVisibility
 from rest_framework import permissions
 
 

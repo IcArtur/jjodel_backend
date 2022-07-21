@@ -14,7 +14,7 @@ class View(models.Model):
     description = models.TextField(verbose_name="Descrizione", null=True, blank=True)
     is_public = models.BooleanField(verbose_name="Pubblico", default=False)
     author = models.ForeignKey(
-        "jjodel.User", on_delete=models.CASCADE, null=True, blank=True
+        "user.User", on_delete=models.CASCADE, null=True, blank=True
     )
     html = models.TextField(verbose_name="Testo HTML", null=True, blank=True)
 
@@ -27,7 +27,7 @@ class ViewOrgVisibility(models.Model):
     """Define model for ViewOrgVisibility."""
 
     readonly = models.BooleanField(verbose_name="Sola lettura", default=True)
-    organization = models.ForeignKey("jjodel.Organization", on_delete=models.CASCADE)
+    organization = models.ForeignKey("organization.Organization", on_delete=models.CASCADE)
     view = models.ForeignKey(View, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -51,8 +51,8 @@ class ViewUserVisibility(models.Model):
     """Define model for ViewUserVisibility."""
 
     readonly = models.BooleanField(verbose_name="Sola lettura", default=True)
-    user = models.ForeignKey("jjodel.User", on_delete=models.CASCADE)
-    view = models.ForeignKey("jjodel.View", on_delete=models.CASCADE)
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
+    view = models.ForeignKey("view.View", on_delete=models.CASCADE)
 
     def __str__(self):
         """Return str repr for model."""

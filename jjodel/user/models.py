@@ -14,7 +14,6 @@ class User(AbstractUser):
 
     @property
     def orgs(self):
-
         """Return the Organizations the user is in."""
         from jjodel.organization.models import Organization
         orgs = Organization.objects.filter(
@@ -28,7 +27,8 @@ class AdminMember(models.Model):
 
     since = models.DateField(editable=False, null=True, blank=True)
     admin = models.ForeignKey(User, on_delete=models.CASCADE)
-    organization = models.ForeignKey("jjodel.Organization", on_delete=models.CASCADE)
+    organization = models.ForeignKey("organization.Organization",
+                                     on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         """On save set created."""
@@ -46,7 +46,8 @@ class GroupMember(models.Model):
 
     since = models.DateField(editable=False, null=True, blank=True)
     member = models.ForeignKey(User, on_delete=models.CASCADE)
-    organization_fk = models.ForeignKey("jjodel.Organization", on_delete=models.CASCADE)
+    organization_fk = models.ForeignKey("organization.Organization",
+                                        on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         """Oreturn Response(status=status.HTTP_403_FORBIDDEN)n save set created."""
@@ -64,7 +65,8 @@ class MembershipRequest(models.Model):
 
     sent = models.DateField(editable=False, null=True, blank=True)
     member = models.ForeignKey(User, on_delete=models.CASCADE)
-    organization = models.ForeignKey("jjodel.Organization", on_delete=models.CASCADE)
+    organization = models.ForeignKey("organization.Organization",
+                                     on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         """On save set created."""

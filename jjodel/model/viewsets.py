@@ -8,6 +8,8 @@ from jjodel.model.permissions import ModelPermission
 from jjodel.model.serializers import ModelSerializer, ModelViewpointSerializer
 from jjodel.viewpoint.models import Viewpoint
 
+from jjodel.user.models import User
+
 
 class ModelViewSet(viewsets.ModelViewSet):
     """ModelViewSet ViewSet."""

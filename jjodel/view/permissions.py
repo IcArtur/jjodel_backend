@@ -1,14 +1,7 @@
 """View file of permission package."""
-from django.db.models import Q
-from jjodel.jjodel.models import (
-    Organization,
-    View,
-    ViewOrgVisibility,
-    Viewpoint,
-    ViewUserVisibility,
-)
-from jjodel.jjodel.models.viewpoint import ViewpointOrgVisibility
 from rest_framework import permissions
+
+from jjodel.view.models import View, ViewOrgVisibility, ViewUserVisibility
 
 
 class ViewPermission(permissions.BasePermission):

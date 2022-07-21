@@ -1,7 +1,8 @@
 """Organization admin module."""
 
 from django.contrib import admin
-from jjodel.jjodel.models import Organization
+
+from jjodel.organization.models import Organization
 
 
 @admin.register(Organization)

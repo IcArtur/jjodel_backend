@@ -1,6 +1,7 @@
 """ViewOrgVisibility serializer file, used to ViewOrgVisibility model for DRF."""
-from jjodel.jjodel.models import ViewOrgVisibility
 from rest_framework import serializers
+
+from jjodel.view.models import ViewOrgVisibility
 
 
 class ViewOrgVisibilitySerializer(serializers.ModelSerializer):

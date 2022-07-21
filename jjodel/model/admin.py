@@ -1,6 +1,7 @@
 """Model admin module."""
 
 from django.contrib import admin
+from django.contrib.auth.models import Group
 
 from jjodel.model.models import Model, ModelViewpoint, ModelOrgVisibility, \
     ModelUserVisibility
@@ -24,3 +25,7 @@ class ModelOrgVisibilityAdmin(admin.ModelAdmin):
 @admin.register(ModelUserVisibility)
 class ModelUserVisibilityAdmin(admin.ModelAdmin):
     """Define ModelUserVisibility admin."""
+
+
+# Unregister Group from admin dashboard
+admin.site.unregister(Group)

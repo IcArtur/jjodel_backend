@@ -1,16 +1,11 @@
 """User admin module."""
 
 from django.contrib import admin
-from jjodel.jjodel.models import (
-    AdminMember,
-    GroupMember,
-    MembershipRequest
-)
+from django.contrib.auth.admin import UserAdmin
 
-# @admin.register(User)
-# class UserAdmin(admin.ModelAdmin):
-#     """Define User admin."""
-#
+from jjodel.user.models import AdminMember, GroupMember, MembershipRequest, User
+
+admin.site.register(User, UserAdmin)
 
 
 @admin.register(AdminMember)

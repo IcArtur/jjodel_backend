@@ -1,15 +1,13 @@
 """ViewpointOrgVisibility REST Api viewset."""
-from jjodel.jjodel.models import Organization, Viewpoint
-from jjodel.jjodel.models.viewpoint import ViewpointOrgVisibility
-from jjodel.jjodel.permissions.visibility.orguser_visibility import (
-    ShareVisibilityPermission,
-)
-from jjodel.organization.serializers.org_visibility import (
-    ViewpointOrgVisibilitySerializer,
-)
 from rest_framework import status, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
+
+from jjodel.organization.models import Organization
+from jjodel.organization.permissions import ShareVisibilityPermission
+from jjodel.organization.serializers.org_visibility.org_viewpoint import \
+    ViewpointOrgVisibilitySerializer
+from jjodel.viewpoint.models import ViewpointOrgVisibility, Viewpoint
 
 
 class ViewpointOrgVisibilityViewSet(viewsets.ModelViewSet):

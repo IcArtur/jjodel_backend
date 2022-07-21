@@ -1,9 +1,7 @@
 """ModelOrgVisibility REST Api viewset."""
-from jjodel.jjodel.models import Organization
-from jjodel.jjodel.models.model import Model, ModelOrgVisibility
-from jjodel.jjodel.permissions.visibility.orguser_visibility import (
-    ShareVisibilityPermission,
-)
+from jjodel.model.models import ModelOrgVisibility, Model
+from jjodel.organization.models import Organization
+from jjodel.organization.permissions import ShareVisibilityPermission
 from jjodel.organization.serializers.org_visibility.org_model import (
     ModelOrgVisibilitySerializer,
 )

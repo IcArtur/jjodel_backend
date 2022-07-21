@@ -1,10 +1,13 @@
 """View REST Api viewset."""
-from jjodel.jjodel.models import User, View, Viewpoint
-from jjodel.jjodel.permissions.view import ViewPermission
-from jjodel.jjodel.serializers.view import ViewSerializer
 from rest_framework import status, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
+
+from jjodel.organization.permissions import ShareVisibilityPermission
+from jjodel.user.models import User
+from jjodel.view.models import View, ViewRequirement
+from jjodel.view.permissions import ViewPermission
+from jjodel.view.serializers import ViewSerializer, ViewRequirementSerializer
 
 
 class ViewViewSet(viewsets.ModelViewSet):

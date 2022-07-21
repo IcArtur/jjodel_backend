@@ -1,6 +1,7 @@
 """ViewpointUserVisibility serializer for DRF. """
-from jjodel.jjodel.models.viewpoint import ViewpointUserVisibility
 from rest_framework import serializers
+
+from jjodel.viewpoint.models import ViewpointUserVisibility
 
 
 class ViewpointUserVisibilitySerializer(serializers.ModelSerializer):

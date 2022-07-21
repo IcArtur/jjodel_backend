@@ -1,14 +1,7 @@
 """View serializer file, used to View Model model for DRF."""
 from rest_framework import serializers
 
-from ..models import View
-
-# class BinaryField(serializers.Field):
-#     def to_representation(self, value):
-#         return value.tobytes()
-#
-#     def to_internal_value(self, value):
-#         return value.encode('utf-8')
+from jjodel.view.models import View, ViewRequirement
 
 
 class ViewSerializer(serializers.ModelSerializer):

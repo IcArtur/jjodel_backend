@@ -1,7 +1,7 @@
 """Viewpoint serializer file, used to Viewpoint Model model for DRF."""
 from rest_framework import serializers
 
-from ..models import Viewpoint
+from jjodel.viewpoint.models import Viewpoint, ViewpointView
 
 
 class ViewpointSerializer(serializers.ModelSerializer):

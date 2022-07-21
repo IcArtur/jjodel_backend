@@ -2,7 +2,8 @@
 
 from django.apps import apps  # noqa: F401
 from django.db import models
-from jjodel.jjodel.models.user import User
+
+from jjodel.user.models import User
 
 
 class Organization(models.Model):

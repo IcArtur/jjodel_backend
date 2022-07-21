@@ -1,6 +1,7 @@
 """ViewUserVisibility serializer file, used to ViewUserVisibility model for DRF."""
-from jjodel.jjodel.models import ViewUserVisibility
 from rest_framework import serializers
+
+from jjodel.view.models import ViewUserVisibility
 
 
 class ViewUserVisibilitySerializer(serializers.ModelSerializer):

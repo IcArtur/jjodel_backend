@@ -2,12 +2,16 @@ version: "3.7"
 services:
   backend:
     build:
+      target: dev
       context: .
-      target: prod
+    ports:
+      - "8000:8000"
+    volumes:
+      - ".:/app"
     environment:
       - DJANGO_DATABASE_URL=postgres://postgres:postgres@db:5432/jjodel
       - NGINX_PORT=${NGINX_PORT}
-      - COMPOSE_FILE=docker-compose.yml:docker-compose.develop.yml
+      - COMPOSE_FILE=docker-compose.yml
       - USE_DOCKER=True
       - COMPOSE_PROJECT_NAME=jjodel
     depends_on:
@@ -21,5 +25,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=jjodel
+    ports:
+      - "55434:5432"
 volumes:
   db_data:

@@ -23,10 +23,15 @@ class ModelViewSet(viewsets.ModelViewSet):
             # I considered the bool value true when '1' is passed.
             is_regexp = self.request.query_params.get("regex") == "1"
             namespace = self.request.query_params.get("namespace") or None
+            author = self.request.query_params.get("author") or None
             if is_regexp:
                 qs = Model.objects.filter(namespace__regex=rf"{namespace}")
-            else:
+            elif namespace:
                 qs = Model.objects.filter(namespace__icontains=namespace)
+            else:
+                qs = Model.objects.all()
+            if author:
+                qs = Model.objects.filter(author__username=author)
         else:
             qs = Model.objects.filter(namespace__iexact=self.kwargs["namespace"])
         return qs

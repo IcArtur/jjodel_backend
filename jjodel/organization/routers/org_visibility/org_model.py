@@ -4,7 +4,7 @@ from jjodel.organization.viewsets.org_visibility.org_model import (
 )
 from rest_framework.routers import DefaultRouter
 
-router = DefaultRouter()
+router = DefaultRouter(trailing_slash=False)
 router.register(r"org", ModelOrgVisibilityViewSet, basename="modelorg_viewset")
 
 urlpatterns = router.urls

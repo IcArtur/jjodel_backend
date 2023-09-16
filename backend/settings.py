@@ -67,6 +67,8 @@ class ProjectDefault(Configuration):
         "django.middleware.clickjacking.XFrameOptionsMiddleware",
     ]
 
+    APPEND_SLASH = False
+
     ROOT_URLCONF = "backend.urls"
 
     TEMPLATES = [
@@ -206,6 +208,8 @@ class Local(ProjectDefault):
     INSTALLED_APPS = ProjectDefault.INSTALLED_APPS.copy()
 
     MIDDLEWARE = ProjectDefault.MIDDLEWARE.copy()
+
+    APPEND_SLASH = False
 
     # Django Debug Toolbar
     # https://django-debug-toolbar.readthedocs.io/en/stable/configuration.html

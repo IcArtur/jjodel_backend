@@ -1,5 +1,5 @@
 """Define urls for organization app."""
-from django.urls import include, path
+from django.urls import include, path, re_path
 
 urlpatterns = [
     path("", include("jjodel.organization.routers.organization")),
@@ -14,7 +14,7 @@ urlpatterns = [
         include("jjodel.organization.routers.org_visibility.org_viewpoint"),
     ),
     # Model Visibility
-    path(
+    re_path(
         "user/<username>/model/<namespace>/",
         include("jjodel.organization.routers.org_visibility.org_model"),
     ),
